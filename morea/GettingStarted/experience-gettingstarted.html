@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Assignment #0 | ICS 312 Spring 2021 </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+
+  <!--  Load bootswatch-based Morea theme file. -->
+  <link rel="stylesheet" href="/ics312_spring2021/css/themes/cerulean/bootstrap.min.css">
+  <link rel="stylesheet" href="/ics312_spring2021/css/style.css">
+  <link rel="stylesheet" href="/ics312_spring2021/css/syntax.css">
+  <link rel="shortcut icon" href="/ics312_spring2021/favicon.ico" type="image/x-icon"/>
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
+  <![endif]-->
+
+  <!-- Load Bootstrap JavaScript components -->
+  <script src="//code.jquery.com/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+  
+  <script type="text/javascript"
+          src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  
+
+  <script>
+    $(window).load(function () {
+      // If on a page associated with a navbar item, make its navbar item 'active'.
+      $('.navbar-nav').find('a[href="' + location.pathname + '"]').parents('li').addClass('active');
+    });
+  </script>
+
+</head>
+<body>
+<!-- Responsive navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <!--  Display three horizontal lines when navbar collapsed. -->
+        <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/ics312_spring2021/index.html"> ICS 312 Spring 2021 </a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="/ics312_spring2021/modules/">Modules</a></li>
+        
+        <li><a href="/ics312_spring2021/outcomes/">Outcomes</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/readings/">Readings</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/experiences/">Experiences</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/assessments/">Assessments</a></li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<div class="breadcrumb-bar">
+  <div class="container">
+    <ol class="breadcrumb">
+      
+      <li><a href="/ics312_spring2021/">Home</a></li>
+      <li><a href="/ics312_spring2021/modules">Modules</a></li>
+      <li><a href="/ics312_spring2021/modules/gettingstarted">Getting Started</a></li>
+      <li class="active">Assignment #0</li>
+    </ol>
+  </div>
+</div>
+
+
+<div class="container">
+  <h2 id="getting-started-with-nasm---homework-assignment">Getting Started with NASM - Homework Assignment</h2>
+
+<p>Several assignments in this course require that you a Linux platform. This
+“assignment” guides you through the steps you need to follow to set up your
+own Linux environment. Note that Having some experience with Linux is
+crucial for your professional prospects. Almost every back-end system out
+there runs Linux.  So if you’re not familiar with Linux, don’t think of
+this “Linux for ICS312” as just something you have to do, but as a
+<em>valuable experience</em>.</p>
+
+<hr />
+
+<h3 id="i-getting-access-to-a-linux-platform">I. Getting Access to a Linux platform</h3>
+
+<p>If you’re already running Linux in one way or another, you can probably skip to the <a href="#nasm">Installing NASM section</a> below.  Otherwise, here are some options:</p>
+
+<ul>
+  <li><a href="#option1">Option #1</a> Install Linux on your own system</li>
+  <li><a href="#option2">Option #2</a> Install a terminal-only Linux Virtual Machine using Vagrant</li>
+  <li><a href="#option3">Option #3</a> Install a Linux Virtual Machine using Virtual Box</li>
+  <li><a href="#option4">Option #4</a> If you are using Windows 10, use WSL to run and install Ubuntu</li>
+</ul>
+
+<p>Option #2 above is likely the easiest, as well as option #4 if you’re running Windows 10.</p>
+
+<p><a name="option1"></a></p>
+
+<h4 id="option-1-run-linux-on-your-own-system">Option #1: Run Linux on your own system</h4>
+
+<p>This is of course the slam dunk. Many of you are already running Linux and
+can likely stop reading now. 
+Running Linux on your own machine is of course the
+ultimate way to gain experience, and most people get started with the ever
+so popular <a href="https://www.ubuntu.com/desktop">Ubuntu desktop
+distribution</a>.</p>
+
+<p>If you’re not quite ready to replace your current OS with Linux, you can go
+<i>dual boot</i> by installing a Linux partition on your machine.  This is
+pretty standard, and there are many step-by-step guides on-line. A decent
+one for setting up a dual-boot Windows/Linux machine is on the <a href="https://help.ubuntu.com/community/WindowsDualBoot">Ubuntu Web
+site</a>. Ubuntu also provides a <a href="http://www.ubuntu.com/desktop/get-ubuntu/windows-installer">Windows
+installer</a>, which I’ve never tried myself but has been used successfully
+by many people. See this page for <a href="https://help.ubuntu.com/community/MactelSupportTeam/AppleIntelInstallation">MacOSX/Ubuntu</a>
+dual boot. These links are active but may be stale. Web search engines are
+your friends for figuring this out.</p>
+
+<p><a name="option2"></a></p>
+
+<h4 id="option-2-run-terminal-only-linux-using-vagrant">Option #2: Run Terminal-only Linux using Vagrant</h4>
+
+<p><a href="https://www.vagrantup.com">Vagrant</a> is a great tool that sits
+on top of virtualization frameworks and allows for super quick installation
+and usage. I use it on top of <a href="https://www.virtualbox.org/">Virtual
+Box</a>, which is free. The <a href="https://www.vagrantup.com/intro/getting-started/index.html">Getting
+Started</a> page on the Vagrant Web site is really good, but just in cases
+here are a few easy steps:</p>
+
+<ul>
+  <li><a href="https://www.virtualbox.org/wiki/Downloads">Download an install Virtual Box</a> (but don’t do any kind of VM setup… just install the software)</li>
+  <li><a href="https://www.vagrantup.com/docs/installation/">Download and install Vagrant</a></li>
+  <li>Create a directory someplace convenient, say <tt>my_vagrant</tt>, and <tt>cd</tt> to that directory</li>
+  <li>In that directory, using whatever terminal on your system, type the command: <tt>vagrant init ubuntu/bionic64</tt>
+    <ul>
+      <li>If you’re a Windows user, here is a likely <a href="https://www.sitepoint.com/getting-started-vagrant-windows/">helpful site about Vagrant and Windows</a></li>
+    </ul>
+  </li>
+  <li>Then type the command: <tt>vagrant up</tt></li>
+  <li>After a few minutes, your VM is running, but you’re not “in” it</li>
+  <li>To get a terminal to your VM: <tt>vagrant ssh</tt>, and voila, welcome to your Linux VM</li>
+  <li>Once you log out from the VM, you can shut it down with: <tt>vagrant halt</tt></li>
+</ul>
+
+<p>Try out the above to make sure everything works. This is the most basic use
+of Vagrant. Your notice that once you’ve done all the above, you’ll have a file called
+<tt>VagrantFile</tt>, which you can customize later if you want. The Vagrant site has tons of good information about additional
+capabilities and features.  Remember that you must always be in your <tt>my_vagrant</tt> directory.</p>
+
+<font color="red" size="+1"><b>IMPORTANT:</b> </font>
+<p>A very useful feature
+is that your <tt>my_vagrant</tt> directory on your host is mounted as
+<tt>/vagrant/</tt> on your VM! So the files you keep there (i.e., your
+programming assignments) are visible both on your host (e.g., for editing)
+and on your VM (e.g., for compiling/running).  In addition,  if your VM may
+become compromised, you can always re-install from scratch but you haven’t
+lost your files since they’re always on your host!  Note that this is
+<tt>/vagrant</tt> on the VM, that is a directory at the root (not, for
+instance, <tt>/home/vagrant</tt>, which is your home directory on your VM.</p>
+
+<p>So, for instance, say you have your homework assignment on your VM in your home directory,
+and that it is in a directory called <tt>my_homework</tt>. This is how you would create
+a <tt>.tar</tt> archive and copy it to your host (i.e., your own computer):</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">% ls
+my_homework
+
+% tar -cvf my_homework.tar my_homework
+
+% cp my_hometork.tar /vagrant</code></pre></figure>
+
+<p>And now, on your computer, in the same directory in which you typed <tt>vagrant ssh</tt> you’ll
+see that file <tt>my_homework.tar</tt> has magically appeared.</p>
+
+<font color="red" size="+1"><b>END IMPORTANT</b> </font>
+
+<p><a name="option3"></a></p>
+
+<h4 id="option-3-run-gui-enabled-linux-using-virtual-box">Option #3: Run GUI-enabled Linux using Virtual Box</h4>
+
+<p>Vagrant above gives you very basic Terminal access, which is fast. However,
+perhaps you want a full-features Ubuntu GUI, at the risk of it running
+slowly on your system. In this case, you want to use Virtual Box (or
+whatever Virtualization framework you want/have installed), and create and
+start your VM that way. There are plenty of on-line documentation/tutorials on how to install
+Ubuntu on VirtualBox. 
+You should get the 17.04 Ubuntu
+desktop distribution, which you can get from the <a href="http://mirror.ancl.hawaii.edu/linux/ubuntu-releases/">UH mirror</a>
+(e.g., download the file named <tt>ubuntu-16.04-desktop-i386.iso</tt>.)</p>
+
+<font color="red" size="+1"><b>IMPORTANT</b> </font>
+
+<p>You absolutely want to set up a Shared
+Folder (which works as the <tt>/vagrant/</tt> directory in Option #2). This
+way, the files you keep there (i.e., your programming assignments) are
+visible both on your host (e.g., for editing) and on your VM (e.g., for
+compiling/running).  In addition,  if your VM may become compromised, you
+can always re-install from scratch but you haven’t lost your files since
+they’re always on your host!</p>
+
+<font color="red" size="+1"><b>END IMPORTANT</b> </font>
+
+<p><a name="option4"></a></p>
+
+<p><br /></p>
+
+<h4 id="option-4-run-ubuntu-via-wsl-on-windows-10">Option #4: Run Ubuntu via WSL on Windows 10</h4>
+
+<p><strong>UPDATE:</strong> <strong>WSL2</strong> supports 32-bit binaries, and this was tested successfully by  a student in the class! See these two links:</p>
+<ul>
+  <li><a href="https://docs.microsoft.com/en-us/windows/wsl/compare-versions">WSL2 vs. WSL1</a></li>
+  <li><a href="https://medium.com/@vishwa1234567891/windows-subsystem-for-linux-wsl-2-0-f95d6f0b932">WSL2 description, which mentions 32-bit binaries</a></li>
+</ul>
+
+<p>So, as long as you have the latest windows and upgrade to WSL2, you should be all good, and proceed to Step II below.</p>
+
+<p><strong>“Old” WSL1 content below</strong></p>
+
+<p>Warning: this option is sketchy as WSL doesn’t support 32-bit binaries, which is
+what we are using in this course; but there is some “magic” that one can do to
+make it work, as explained at the bottom of this page</p>
+
+<p>Using <a href="https://docs.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux (WSL)</a>
+you can run Linux on your Windows 10 machine. All information is
+<a href="https://docs.microsoft.com/en-us/windows/wsl/about">The main WSL page</a>. 
+For instance, you can install the
+<a href="https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6#activetab=pivot:overviewtab">Ubuntu Application </a>: click Get, and follow the instructions to install this <strong>free</strong> application. Once the application installed, you have to:</p>
+
+<ul>
+  <li>Open the Control Panel</li>
+  <li>Click <strong>Programs</strong></li>
+  <li>Click <strong>Program Features</strong></li>
+  <li>On the left side, click <strong>Turn Windows Features On</strong></li>
+  <li>Check the <strong>Windows Subsystem for Linux</strong> box</li>
+  <li>Click <strong>OK</strong></li>
+</ul>
+
+<p>You can now open the Ubuntu application, which will install (you may have
+to hit enter). It will ask you to make an admin account, pick a password, etc. And voila!</p>
+
+<p>Here is a <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">helpful page</a> in case you’re encountering difficulties.</p>
+
+<hr />
+
+<hr />
+
+<p><a name="nasm"></a></p>
+
+<h3 id="ii-installing-nasm">II. Installing NASM</h3>
+
+<p>Now that you have access to a Linux machine, you need to install NASM. 
+Assuming you’re running Ubuntu, you can use the Ubuntu package
+manager tool with a GUI. However, I typically use only the command-line (you’ll find that’s a theme throughout the semester) to install packages.</p>
+<p>
+First, 
+ make sure you are connected to the network. Then 
+open a Terminal window and type the following command:
+
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">sudo apt update</code></pre></figure>
+
+
+The <tt>sudo</tt> command runs commands as the super user, and when you
+installed Ubuntu you were placed by default in the list of users who can
+use <tt>sudo</tt>. The <tt>apt</tt> command is used to deal with
+everything related to package management, and in the invocation above, to
+update your package list so that you will not have errors installing new
+packages.  This could take a while. 
+
+Once the package list has been
+updated, then install nasm by typing the following command:
+
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">sudo apt install gcc make nasm gcc-multilib</code></pre></figure>
+
+
+This last package is to make sure that you can generate 32-bit
+executables with the gcc C compiler.
+
+That's it!
+
+
+<hr />
+
+
+<a name="nasm_works"></a>
+
+<h3>III. Checking that NASM works</h3>
+
+I've built a small test case, which is in fact the basic framework we'll be
+using throughout the semester, so that you can check that everything's
+working.  Download the <a href="./nasm_check.tar">nasm_check.tar</a>
+archive to your account on your Linux box, e.g., in your home
+directory. This can be done in many ways, for instance from a Web browser that you're running in your Ubuntu installation. The easiest way may be to
+type in a terminal the command (on one line):
+
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">wget http://henricasanova.github.io/ics312_fall2020/morea/GettingStarted/nasm_check.tar</code></pre></figure>
+
+
+(If you get a "<tt>wget: command not found</tt>" error, simply install <tt>wget</tt> by typing the command "<tt>sudo apt install wget</tt>")
+<p>
+
+Once the archive is in your working directory, you can unarchive it by typing the command:
+
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">tar -xvf nasm_check.tar</code></pre></figure>
+
+
+This will create a directory named <tt>nasm_check</tt>. 
+Go to that directory:
+
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">cd  nasm_check</code></pre></figure>
+
+
+and type the command:
+
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">make</code></pre></figure>
+
+
+<p>
+You should get some output, and the last line should be: "It works!". If
+not, then you should send me an e-mail with the whole output.  If you get
+the correct output, you now have everything that you need for all NASM
+assignments.
+</p>
+
+If you see some "Command not found" message,you can likely install the required software with <tt>sudo apt install ...</tt> as explained in the error message.
+
+<p>
+If you see some errors like "skipping incompatible ...", you may have to install two new packages:
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">sudo apt install lib32gcc-9-dev libx32gcc-9-dev</code></pre></figure>
+
+
+If this fails, contact your TA/instructor.
+
+
+<p>
+** On WSL **
+
+If you are using WSL on Windows 10 (or Parallels on Mac), the simple steps above will most likely cause an error (about missing files or about some unexpected "("). This is because we're generating 32-bit executables and somehow, this causes a problem on WSL. This is a known issue, and there is a great
+<a href="https://stackoverflow.com/questions/42120938/exec-format-error-32-bit-executable-windows-subsystem-for-linux">StackOverflow post</a> about it. According to this post you "just" need to do:
+</p>
+
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">sudo apt install qemu-user-static
+sudo update-binfmts --install i386 /usr/bin/qemu-i386-static --magic '\x7fELF\x01\x01\x01\x03\x00\x00\x00\x00\x00\x00\x00\x00\x03\x00\x03\x00\x01\x00\x00\x00' --mask '\xff\xff\xff\xff\xff\xff\xff\xfc\xff\xff\xff\xff\xff\xff\xff\xff\xf8\xff\xff\xff\xff\xff\xff\xff'
+
+sudo service binfmt-support start
+
+sudo dpkg --add-architecture i386
+sudo apt update
+sudo apt install gcc:i386</code></pre></figure>
+
+
+Now, each time you start up you **have to do** the "sudo service binfmt-support start"  again!  
+
+If this still doesn't work, then perhaps Option #2 is the way to go. 
+
+---
+
+</p></p></p>
+
+</div>
+
+
+
+
+<script src="/ics312_spring2021/js/scrollIfAnchor.js"></script>
+
+<div class="footer-background hidden-print">
+  <footer>
+    <div class="container page-footer">
+      
+      No footer page content supplied.
+      
+      <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
+        Last update on: <span>2020-12-15 08:57:24 -1000</span></p>
+
+      <p style="margin: 0">
+        
+        1 modules
+        
+        | 0 outcomes
+        
+        
+        | 5 readings
+        
+        
+        | 1 experiences
+        
+        
+        | 0 assessments
+        
+      </p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

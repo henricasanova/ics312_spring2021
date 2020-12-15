@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Syllabus | ICS 312 Spring 2021 </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+
+  <!--  Load bootswatch-based Morea theme file. -->
+  <link rel="stylesheet" href="/ics312_spring2021/css/themes/cerulean/bootstrap.min.css">
+  <link rel="stylesheet" href="/ics312_spring2021/css/style.css">
+  <link rel="stylesheet" href="/ics312_spring2021/css/syntax.css">
+  <link rel="shortcut icon" href="/ics312_spring2021/favicon.ico" type="image/x-icon"/>
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
+  <![endif]-->
+
+  <!-- Load Bootstrap JavaScript components -->
+  <script src="//code.jquery.com/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+  
+  <script type="text/javascript"
+          src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  
+
+  <script>
+    $(window).load(function () {
+      // If on a page associated with a navbar item, make its navbar item 'active'.
+      $('.navbar-nav').find('a[href="' + location.pathname + '"]').parents('li').addClass('active');
+    });
+  </script>
+
+</head>
+<body>
+<!-- Responsive navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <!--  Display three horizontal lines when navbar collapsed. -->
+        <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/ics312_spring2021/index.html"> ICS 312 Spring 2021 </a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="/ics312_spring2021/modules/">Modules</a></li>
+        
+        <li><a href="/ics312_spring2021/outcomes/">Outcomes</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/readings/">Readings</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/experiences/">Experiences</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/assessments/">Assessments</a></li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<div class="breadcrumb-bar">
+  <div class="container">
+    <ol class="breadcrumb">
+      
+      <li><a href="/ics312_spring2021/">Home</a></li>
+      <li><a href="/ics312_spring2021/modules">Modules</a></li>
+      <li><a href="/ics312_spring2021/modules/gettingstarted">Getting Started</a></li>
+      <li class="active">Syllabus</li>
+    </ol>
+  </div>
+</div>
+
+
+<div class="container">
+  <h2 id="course-syllabus-for-ics312">Course syllabus for ICS312</h2>
+
+<h3 id="overview">Overview</h3>
+
+<p>In this class we will study machine instructions for commonly-used microprocessors and learn how to write programs in assembly language. We will review basic elements of computer architecture. We will understand the fundamental relationships between basic elements of computer architectures, machine-level languages and high-level languages. We will also learn the principles behind so-called “systems programs” (assemblers, linkers, compilers, debuggers, compilers).</p>
+
+<p>This syllabus and an overall view of the course is further described 
+in <a href="./ics312_intro.pdf">these slides</a></p>
+
+<p>The ordered list of course topics is:</p>
+
+<ul>
+  <li>Introduction and historical perspective (Week 1)</li>
+  <li>Computer architecture principles (Week 2)</li>
+  <li>Numbers and computers (Week 3)</li>
+  <li>The x86 architecture (Week 4)</li>
+  <li>The NASM assembly programming environment (Week 5,6)</li>
+  <li>Essential assembly programming (Week 7,8,9)</li>
+  <li>Bit operations (Week 10)</li>
+  <li>Subprograms (Week 11,12)</li>
+  <li>Compiling (Week 13, 14)</li>
+  <li>Linking, Loading, Debugging (Week 15)</li>
+</ul>
+
+<hr />
+
+<h3 id="course-specific-student-learning-outcomes">Course-Specific Student Learning Outcomes</h3>
+
+<ul>
+  <li>Students understand the underlying principle behind machine-level data representations, computing, and programming</li>
+  <li>Students are proficient with assembly programming for the x86 architecture, including register operations, control structures, bitwise operations, and subprograms</li>
+  <li>Students understand the underlying principles behind compiling, linking, loading, and debugging</li>
+  <li>Students gain some hands-on experience with developing a small compiler</li>
+</ul>
+
+<hr />
+
+<h3 id="program-student-outcomes">Program Student Outcomes</h3>
+
+<ul>
+  <li>Analyze a complex computing problem and apply principles of computing and other relevant disciplines to identify solutions</li>
+  <li>Design, implement, and evaluate a computing-based solution to meet a given set of computing requirements in the context of the program’s discipline</li>
+  <li>Function effectively as a member or leader of a team engaged in activities appropriate to the program’s discipline</li>
+  <li>Apply computer science theory and software development fundamentals to produce computing-based solutions</li>
+</ul>
+
+<hr />
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<p>ICS212 (or concurrent), (ICS311 or EE 367), and ICS314, or consent</p>
+
+<hr />
+
+<h3 id="instructor">Instructor</h3>
+
+<p>Henri Casanova<br />
+Office hours: Via Zoom, Tue/Wed 2PM-3PM<br />
+e-mail: henric@hawaii.edu<br /></p>
+
+<hr />
+
+<h3 id="teaching-assistants">Teaching Assistants</h3>
+
+<p>Kyle Berney<br />
+Office hours: TBD<br />
+e-mail: berneyk@hawaii.edu<br />
+<br /></p>
+
+<hr />
+
+<h3 id="course-website">Course Website</h3>
+
+<p><a href="http://henricasanova.github.io/ics312_spring2021">http://henricasanova.github.io/ics312_spring2021</a></p>
+
+<p>The Website is the authoritative source for all course material.</p>
+
+<hr />
+
+<h3 id="lectures">Lectures</h3>
+
+<p>Via Zoom, Mon/Wed 12PM-1:15PM<br /></p>
+
+<hr />
+
+<h3 id="inverted-lectures">Inverted Lectures</h3>
+
+<p>Some lectures will be inverted in this course. This means that pre-recorded
+screencasts will be watched by students outside of lecture periods. Some
+lecture periods will be spent doing practice exercises based on the
+screencast. The goal is that for more difficult or more technical (e.g.,
+mathematical) content students will have the opportunity to listen to the
+lecture at their own pace and will have supervised practice time during
+lecture periods.</p>
+
+<hr />
+
+<h3 id="textbook">Textbook</h3>
+
+<p>We will use free texts available for download for this class (if you want printed copies, you will have to print them at your own expense, for instance using ITS services and your own paper, not on ICS printers):</p>
+
+<ul>
+  <li><a href="http://pacman128.github.io/static/pcasm-book.pdf">PC Assembly Language, A. Carter</a></li>
+  <li><a href="http://www.nasm.us/xdoc/2.09.04/nasmdoc.pdf">NASM User Manual</a></li>
+</ul>
+
+<p>There are plenty of texts on assembly programming, which you may find useful, such as:</p>
+
+<ul>
+  <li><a href="https://www.pearson.com/us/higher-education/program/Irvine-Assembly-Language-for-x-86-Processors-7th-Edition/PGM275499.html">Assembly Language for x86 Processors</a> (you may be able to find PDFs of previous editions online)</li>
+  <li><a href="http://www.ic.unicamp.br/~pannain/mc404/aulas/pdfs/Art%20Of%20Intel%20x86%20Assembly.pdf">The Art of Assembly Language</a></li>
+</ul>
+
+<hr />
+
+<h3 id="grading">Grading</h3>
+
+<p>The overall grade is computed on a total of 1000 points, broken down as follows:</p>
+
+<!-- - On-line quizzes: __70 points__ -->
+<ul>
+  <li>Homework and programming assignments: <strong>500 points</strong>
+    <ul>
+      <li>Homework #1: 16 points</li>
+      <li>Homework #2: 56 points</li>
+      <li>Homework #3: 48 points</li>
+      <li>Homework #4: 40 points</li>
+      <li>Homework #5: 90 points</li>
+      <li>Homework #6: 80 points</li>
+      <li>Homework #7: 60 points</li>
+      <li>Homework #8: 70 points</li>
+      <li>Homework #9: 40 points</li>
+    </ul>
+  </li>
+  <li>Midterm: <strong>250 points</strong></li>
+  <li>Final: <strong>250 points</strong></li>
+</ul>
+
+<p>Grading will be as follows:</p>
+
+<ul>
+  <li><strong>A</strong>: ≥ 90%</li>
+  <li><strong>B</strong>: ≥ 80% and &lt; 90%</li>
+  <li><strong>C</strong>: ≥ 70% and &lt; 80%</li>
+  <li><strong>D</strong>: ≥ 60% and &lt; 70%</li>
+  <li><strong>F</strong>: &lt; 60%</li>
+</ul>
+
+<p>Plus and minus grades will be assigned according to UHM’s grading scheme.</p>
+
+<hr />
+
+<h3 id="assignment-policy">Assignment policy</h3>
+
+<h4 id="what-to-turn-in">What to turn in?</h4>
+
+<p>Turn in your own work. It is okay to discuss homework with others, and in
+fact is encourage as it can lead to fruitful discussions and discoveries,
+but the work you turn in should always be your own.  Answers should always
+include how the answer was derived..</p>
+
+<p>Assignments specify which files to turn in (file names and types) and,
+whenever applicable, how programs should build. <strong>Not matching these
+specifications will return in grade penalties.</strong></p>
+
+<h4 id="how-to-turn-in">How to turn in?</h4>
+
+<p>All assignments are be turned in via <a href="https://laulima.hawaii.edu/">Laulima</a></p>
+
+<h4 id="when-to-turn-in">When to turn in?</h4>
+
+<p>Assignments are due at 11:55PM on the due day. Late work will be accepted,
+with a <b>10% grade penalty for up to 24 hours of lateness</b>.  For
+instance, if the assignment is due on 3/10 and is turned in on 3/11 at
+11AM, a 10% penalty if applied to the grade. Turning in assignments more
+than 24h late will always result in a 0.</p>
+
+<!--
+
+---
+
+### Quiz policy
+
+Quizzes are announced in class the week before. There is <font color="red">no makeup</font>. (Recall that your worst quiz grade is discarded.)   
+
+**Quizzes are to be taken on-line one Laulima.  Each quiz must be taken in under 10 minutes, and can
+be taken in the 20 minutes before class begins.**
+-->
+
+<hr />
+
+<h3 id="academic-dishonesty">Academic Dishonesty</h3>
+
+<p>All occurrences of academic dishonesty, as defined below, will result in a
+grade of 0 for the assignment or exam, and in a memo in your ICS department
+file describing the incident. Which will be done for all students involved.
+Should there be more than one memo of this type in your file, the incident
+will be referred to the Dean of Students. Disciplinary sanctions range from
+a warning to expulsion from the university, as seen at:
+<a href="http://www.catalog.hawaii.edu/about-uh/campus-policies.htm">http://www.catalog.hawaii.edu/about-uh/campus-policies.htm</a></p>
+
+<p>See relevant excerpts below:</p>
+
+<h4 id="academic-integrity">Academic Integrity</h4>
+
+<p>The integrity of a university depends upon academic honesty, which consists of independent learning and research. Academic dishonesty includes cheating and plagiarism. The following are examples of violations of the Student Conduct Code that may result in suspension or expulsion from UH Manoa.</p>
+
+<h4 id="cheating">Cheating</h4>
+
+<p>Cheating includes, but is not limited to, giving unauthorized help during an examination, obtaining unauthorized information about an examination before it is administered, using inappropriate sources of information during an examination, altering the record of any grade, altering an answer after an examination has been submitted, falsifying any official UH Manoa record, and misrepresenting the facts in order to obtain exemptions from course requirements.</p>
+
+<h4 id="plagiarism">Plagiarism</h4>
+
+<p>Plagiarism includes, but is not limited to, submitting, to satisfy an academic requirement, any document that has been copied in whole or in part from another individual’s work without identifying that individual; neglecting to identify as a quotation a documented idea that has not been assimilated into the student’s language and style; paraphrasing a passage so closely that the reader is misled as to the source; submitting the same written or oral material in more than one course without obtaining authorization from the instructors involved; and “dry-labbing,” which includes obtaining and using experimental data from other students without the express consent of the instructor, utilizing experimental data and laboratory write-ups from other sections of the course or from previous terms, and fabricating data to fit the expected results.</p>
+
+<h4 id="disciplinary-action">Disciplinary Action</h4>
+
+<p>The faculty member must notify the student of the alleged academic misconduct and discuss the incident in question. The faculty member may take academic action against the student as the faculty member deems appropriate. These actions may be appealed through the Academic Grievance Procedure, available in the Office of Judicial Affairs. In instances in which the faculty member believes that additional action (i.e., disciplinary sanctions and a UH Manoa record) should be established, the case should be forwarded to the Office of Judicial Affairs.</p>
+
+
+</div>
+
+
+
+
+<script src="/ics312_spring2021/js/scrollIfAnchor.js"></script>
+
+<div class="footer-background hidden-print">
+  <footer>
+    <div class="container page-footer">
+      
+      No footer page content supplied.
+      
+      <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
+        Last update on: <span>2020-12-15 08:57:24 -1000</span></p>
+
+      <p style="margin: 0">
+        
+        1 modules
+        
+        | 0 outcomes
+        
+        
+        | 5 readings
+        
+        
+        | 1 experiences
+        
+        
+        | 0 assessments
+        
+      </p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

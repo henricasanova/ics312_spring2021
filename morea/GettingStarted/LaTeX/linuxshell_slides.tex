@@ -1,0 +1,288 @@
+%\documentclass[utf8x,10pt,handout]{beamer}
+\documentclass[utf8x,10pt]{beamer}
+
+%\usepackage{ics332}
+
+\title{Linux Command Line Interface}
+
+\begin{document}
+
+\maketitle{}
+
+\section{Foreword}
+
+\begin{frame}
+  \frametitle{Foreword}
+
+  \begin{itemize}
+  \item It is supposed to be a refresher (?!)
+  \item If you are familiar with UNIX/Linux/MacOS X CLI, this is going
+    to be boring...
+  \item I will not talk about editors (vi, emacs...)
+  \end{itemize}
+  \vfill
+\end{frame}
+
+\section{Basics}
+\subsection{Terminal. CLI. Shell}
+\begin{frame}
+  \frametitle{Basics}
+
+  \begin{itemize}
+  \item \textbf{(Computer) Terminal}: Hardware device for data entry and
+    display;
+  \item \textbf{Terminal Emulator} (aka tty): An application program
+    replacing a computer terminal. Many of those, OS dependent (cmd
+    for DOS/Win; Terminal for OS X; xterm for Linux; ...);
+  \item The Terminal provides user access to the computer through the
+    \textbf{Command Line Interface} (CLI) where the user issues commands.
+  \item The CLI "dialect" is the \textbf{Shell}. In UNIX-like systems
+    a lot of dialects exists: sh, bash, csh, tcsh, ksh, zsh...
+  \item I will only use the \texttt{bash} shell.
+  \end{itemize}
+\end{frame}
+
+\subsection{Shell}
+\begin{frame}
+  \frametitle{Shell}
+
+  \begin{itemize}
+  \item How to access a shell
+    \begin{itemize}
+    \item Logging in to your own Linux (virtual) box (CTRL-ALT-F1/CTRL-ALT-F7);
+    \item Opening a graphic terminal (xterm...);
+    \item SSHing into a server.
+    \end{itemize}
+  \item To know which shell you use: \texttt{echo \$SHELL}
+
+    I use \texttt{this font} to denote commands
+  \item SHELL is an environment variable
+  \item \texttt{echo} is a command
+  \end{itemize}
+\end{frame}
+
+\subsection{Commands}
+\begin{frame}
+  \frametitle{Commands}
+  \scriptsize
+
+  \begin{itemize}
+  \item \texttt{apropos}: search the manual page names and descriptions
+  \item \texttt{man}: manual page (try \texttt{man apropos}, \texttt{man man})
+    
+    Almost every command, system program, or API has a man page
+
+    \texttt{man apropos}, \texttt{man fread}, \texttt{man pthreads},
+    \texttt{man 1 open}, \texttt{man 2 open}
+
+    Reading man pages is a very worthwhile activity
+
+  \item Not everything is a command... \texttt{type <cmd>}
+    
+    \texttt{type man} (command), \texttt{type echo} (shell built-in),
+    \texttt{type ls} (alias (well... on my system))
+  \item Commands take arguments (optional or mandatory); take input
+    from the standard input (aka \texttt{stdin}); produce output on
+    the standard output (\texttt{stdout}) or the standard error output
+    (\texttt{stderr}).
+
+    \vfill
+
+  \item UNIX philosophy: Have a lot of programs; Each of them does
+    only one thing but does it well.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{First Commands}
+
+  \begin{itemize}
+  \item Print the current working directory: \texttt{pwd};
+  \item List the files in the current directory: \texttt{ls};
+  \item Create a directory: \texttt{mkdir <directoryName>};
+  \item Change the current directory to \texttt{<directoryName>}:
+    \texttt{cd <directoryName>};
+  \item Create an empty file: \texttt{touch <fileName>};
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Wildcards}
+  \begin{itemize}
+  \item List the files whose names start with a \texttt{c}: \texttt{ls
+      c*};
+  \item List the files whose names end with a \texttt{c}: \texttt{ls
+      *c};
+  \item List the files whose names contain a \texttt{c}: \texttt{ls
+      *c*};
+  \item We could spend a whole session (and maybe more) on bash and
+    the use of regular expressions (Look up \emph{bash regular
+      expressions} with your favorite search engine)
+  \end{itemize}
+\end{frame}
+
+\subsection{Pipes}
+\begin{frame}
+  \frametitle{UNIX Philosophy (continued) - Pipes}
+
+  \emph{Expect the output of every program to become the input to
+    another, as yet unknown, program. Don't clutter output with
+    extraneous information. Avoid stringently columnar or binary input
+    formats. Don't insist on interactive input}
+
+  \begin{itemize}
+  \item \texttt{grep}: find a string in a file or a set of files;
+
+    \texttt{prompt> grep Prince TheLittlePrince.txt}
+
+    \texttt{prompt> grep -i Prince TheLittlePrince.txt}
+
+    ... [A lot]
+
+  \item \texttt{wc}: count lines, words, characters
+
+    \texttt{prompt> wc TheLittlePrince.txt}
+
+    2582 17297 91651 TheLittlePrince.txt
+
+    lines words characters
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{UNIX Philosophy (continued) - Pipes}
+
+  \begin{itemize}
+  \item \texttt{$|$}: "pipe" (the output of the program at the left of the pipe
+    becomes the input of the program at the right of the pipe)
+
+    \texttt{prompt> grep -i Prince TheLittlePrince.txt $|$ wc -l}
+
+    195
+    
+  \item and more... 
+
+    \texttt{cat TheLittlePrince.txt $|$ sed 's/becuase/because/g'}
+
+  \end{itemize}
+\end{frame}
+
+\section{Miscellaneous}
+\subsection{Jobs Management}
+\begin{frame}
+  \frametitle{Jobs}
+
+  \begin{itemize}
+  \item Commands can be executed in the \emph{background} thanks to
+    the \& symbol.
+
+    \texttt{find / -type f | wc -l > /tmp/find.stdout 2> /tmp/find.stderr \&}
+
+  \item The running command is called a \emph{job}
+  \item \texttt{jobs} is the command to look at running jobs
+  \item Jobs can be accessed as \%1, \%2, ...
+  \item \texttt{fg \%2} brings the job \#2 to the \emph{foreground}
+  \item If a job is already running, hitting CTRL-Z suspends the job
+    and gives it a job id
+  \item \texttt{bg \%4} resumes the suspended job in the background
+  \item \texttt{kill \%7} attempts to terminate the job \#7 gracefully
+  \item \texttt{kill -9 \%7} kills the job unconditionally
+  \end{itemize}
+\end{frame}
+
+\subsection{Environment Variables}
+\begin{frame}
+  \frametitle{Environment Variables}
+
+  \begin{itemize}
+  \item \texttt{printenv} to get the list of environment variables;
+  \item Sometimes you’ll have to set/modify environment variables
+    (PATH) (and you can mess things up badly);
+  \item Setting a new environment variable (or overwriting another
+    one):
+
+    \texttt{export NEWTHING="a:b/c"}
+  \item Adding to an environment variable:
+
+    \texttt{export NEWTHING="\$NEWTHING hello"}
+  \end{itemize}
+\end{frame}
+
+\subsection{Shell Customization}
+\begin{frame}
+  \frametitle{Shell Customization}
+
+  \begin{itemize}
+  \item You are supposed to always know what you are doing
+
+    \texttt{cp}, \texttt{rsync} can be useful for backups
+
+  \item \texttt{chsh}: Change the shell
+  \item Edit \texttt{.bashrc} and/or \texttt{.bash\_profile} to
+    add/modify aliases, environment variables...
+
+    \texttt{export PATH=\$PATH:\$HOME/bin}
+
+    \hfill \emph{--- Tip: Always add the old path (unless you know what you are doing)}
+
+    (Setting \texttt{export PATH=foo} is a bad idea... Why?)
+  \item \texttt{source \$HOME/.bashrc} is faster than logging out and
+    back in.
+  \end{itemize}
+\end{frame}
+
+\subsection{Tricks and Tips}
+\begin{frame}
+  \frametitle{Tricks and Tips}
+
+  \begin{itemize}
+  \item Tab completion
+  \item Up-arrow
+  \item \texttt{history} and \texttt{!$<$something$>$}, \texttt{!ls}, \texttt{!!}, \texttt{!23}
+  \item CTRL-R
+  \item ... and others ...
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{sudo / System Updates/System Upgrades}
+
+  \begin{itemize}
+  \item \texttt{sudo} is dangerous (With great power comes great responsibility);
+  \item Every now and then the system will tell you something like:
+{\scriptsize
+\begin{verbatim}
+224 packages can be updated.
+130 updates are security updates.
+
+New release '16.04.1 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+\end{verbatim}
+}
+  \item DO NOT \texttt{do-release-upgrade} your Virtual Machine during the semester
+  \end{itemize}
+\end{frame}
+
+\section{Conclusion}
+\subsection{Conclusion}
+\begin{frame}
+  \frametitle{Conclusion. Limits}
+
+  \begin{itemize}
+  \item We've barely scratched the surface...
+  \item The CLI is very powerful
+	\begin{itemize}
+	\item But there are things it can't do (e.g., floating-point numbers)
+	\end{itemize}
+  \item Knowing a scripting language is a good idea for your future
+    (bash, Python, Ruby?, Perl?...)
+    \begin{itemize}
+    \item Allows you to avoid tedious by-hand work (e.g., see the first "programming assignment")
+	\begin{itemize}
+    	\item There is a Scripting Languages course (ICS215)
+	\end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\end{document}
