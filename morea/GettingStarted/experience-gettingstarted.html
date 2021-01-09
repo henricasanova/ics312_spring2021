@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Assignment #0 | ICS 312 Spring 2021 </title>
+  <title> Homework Assignment #0 | ICS 312 Spring 2021 </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
 
@@ -77,14 +77,14 @@
       <li><a href="/ics312_spring2021/">Home</a></li>
       <li><a href="/ics312_spring2021/modules">Modules</a></li>
       <li><a href="/ics312_spring2021/modules/gettingstarted">Getting Started</a></li>
-      <li class="active">Assignment #0</li>
+      <li class="active">Homework Assignment #0</li>
     </ol>
   </div>
 </div>
 
 
 <div class="container">
-  <h2 id="getting-started-with-nasm---homework-assignment">Getting Started with NASM - Homework Assignment</h2>
+  <h2 id="homework-assignment-0-0-pts">Homework Assignment #0 [0 pts]</h2>
 
 <p>Several assignments in this course require that you a Linux platform. This
 “assignment” guides you through the steps you need to follow to set up your
@@ -126,7 +126,7 @@ pretty standard, and there are many step-by-step guides on-line. A decent
 one for setting up a dual-boot Windows/Linux machine is on the <a href="https://help.ubuntu.com/community/WindowsDualBoot">Ubuntu Web
 site</a>. Ubuntu also provides a <a href="http://www.ubuntu.com/desktop/get-ubuntu/windows-installer">Windows
 installer</a>, which I’ve never tried myself but has been used successfully
-by many people. See this page for <a href="https://help.ubuntu.com/community/MactelSupportTeam/AppleIntelInstallation">MacOSX/Ubuntu</a>
+by many people. See this page for <a href="https://help.ubuntu.com/community/MactelSupportTeam/AppleIntelInstallation">MacOS/Ubuntu</a>
 dual boot. These links are active but may be stale. Web search engines are
 your friends for figuring this out.</p>
 
@@ -158,7 +158,7 @@ here are a few easy steps:</p>
 
 <p>Try out the above to make sure everything works. This is the most basic use
 of Vagrant. Your notice that once you’ve done all the above, you’ll have a file called
-<tt>VagrantFile</tt>, which you can customize later if you want. The Vagrant site has tons of good information about additional
+<tt>Vagrantfile</tt>, which you can customize later if you want. The Vagrant site has tons of good information about additional
 capabilities and features.  Remember that you must always be in your <tt>my_vagrant</tt> directory.</p>
 
 <font color="red" size="+1"><b>IMPORTANT:</b> </font>
@@ -177,11 +177,11 @@ and that it is in a directory called <tt>my_homework</tt>. This is how you would
 a <tt>.tar</tt> archive and copy it to your host (i.e., your own computer):</p>
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text">% ls
-my_homework
+my_homework/
 
-% tar -cvf my_homework.tar my_homework
+% zip -r my_homework.zip my_homework
 
-% cp my_hometork.tar /vagrant</code></pre></figure>
+% cp my_homework.zip /vagrant</code></pre></figure>
 
 <p>And now, on your computer, in the same directory in which you typed <tt>vagrant ssh</tt> you’ll
 see that file <tt>my_homework.tar</tt> has magically appeared.</p>
@@ -220,41 +220,13 @@ they’re always on your host!</p>
 
 <h4 id="option-4-run-ubuntu-via-wsl-on-windows-10">Option #4: Run Ubuntu via WSL on Windows 10</h4>
 
-<p><strong>UPDATE:</strong> <strong>WSL2</strong> supports 32-bit binaries, and this was tested successfully by  a student in the class! See these two links:</p>
+<p><strong>WSL2</strong> supports 32-bit binaries. See these two links.</p>
 <ul>
   <li><a href="https://docs.microsoft.com/en-us/windows/wsl/compare-versions">WSL2 vs. WSL1</a></li>
   <li><a href="https://medium.com/@vishwa1234567891/windows-subsystem-for-linux-wsl-2-0-f95d6f0b932">WSL2 description, which mentions 32-bit binaries</a></li>
 </ul>
 
-<p>So, as long as you have the latest windows and upgrade to WSL2, you should be all good, and proceed to Step II below.</p>
-
-<p><strong>“Old” WSL1 content below</strong></p>
-
-<p>Warning: this option is sketchy as WSL doesn’t support 32-bit binaries, which is
-what we are using in this course; but there is some “magic” that one can do to
-make it work, as explained at the bottom of this page</p>
-
-<p>Using <a href="https://docs.microsoft.com/en-us/windows/wsl/about">Windows Subsystem for Linux (WSL)</a>
-you can run Linux on your Windows 10 machine. All information is
-<a href="https://docs.microsoft.com/en-us/windows/wsl/about">The main WSL page</a>. 
-For instance, you can install the
-<a href="https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6#activetab=pivot:overviewtab">Ubuntu Application </a>: click Get, and follow the instructions to install this <strong>free</strong> application. Once the application installed, you have to:</p>
-
-<ul>
-  <li>Open the Control Panel</li>
-  <li>Click <strong>Programs</strong></li>
-  <li>Click <strong>Program Features</strong></li>
-  <li>On the left side, click <strong>Turn Windows Features On</strong></li>
-  <li>Check the <strong>Windows Subsystem for Linux</strong> box</li>
-  <li>Click <strong>OK</strong></li>
-</ul>
-
-<p>You can now open the Ubuntu application, which will install (you may have
-to hit enter). It will ask you to make an admin account, pick a password, etc. And voila!</p>
-
-<p>Here is a <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">helpful page</a> in case you’re encountering difficulties.</p>
-
-<hr />
+<p>So, as long as you have the latest Windows and have WLS2, you should be all good, and proceed to Step II below.</p>
 
 <hr />
 
@@ -309,7 +281,7 @@ directory. This can be done in many ways, for instance from a Web browser that y
 type in a terminal the command (on one line):
 
 
-<figure class="highlight"><pre><code class="language-text" data-lang="text">wget http://henricasanova.github.io/ics312_fall2020/morea/GettingStarted/nasm_check.tar</code></pre></figure>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">wget http://henricasanova.github.io/ics312_spring2021/morea/GettingStarted/nasm_check.tar</code></pre></figure>
 
 
 (If you get a "<tt>wget: command not found</tt>" error, simply install <tt>wget</tt> by typing the command "<tt>sudo apt install wget</tt>")
@@ -334,17 +306,15 @@ and type the command:
 <figure class="highlight"><pre><code class="language-text" data-lang="text">make</code></pre></figure>
 
 
-<p>
 You should get some output, and the last line should be: "It works!". If
 not, then you should send me an e-mail with the whole output.  If you get
 the correct output, you now have everything that you need for all NASM
 assignments.
-</p>
 
 If you see some "Command not found" message,you can likely install the required software with <tt>sudo apt install ...</tt> as explained in the error message.
 
-<p>
 If you see some errors like "skipping incompatible ...", you may have to install two new packages:
+
 
 <figure class="highlight"><pre><code class="language-text" data-lang="text">sudo apt install lib32gcc-9-dev libx32gcc-9-dev</code></pre></figure>
 
@@ -352,31 +322,8 @@ If you see some errors like "skipping incompatible ...", you may have to install
 If this fails, contact your TA/instructor.
 
 
-<p>
-** On WSL **
 
-If you are using WSL on Windows 10 (or Parallels on Mac), the simple steps above will most likely cause an error (about missing files or about some unexpected "("). This is because we're generating 32-bit executables and somehow, this causes a problem on WSL. This is a known issue, and there is a great
-<a href="https://stackoverflow.com/questions/42120938/exec-format-error-32-bit-executable-windows-subsystem-for-linux">StackOverflow post</a> about it. According to this post you "just" need to do:
-</p>
-
-
-<figure class="highlight"><pre><code class="language-text" data-lang="text">sudo apt install qemu-user-static
-sudo update-binfmts --install i386 /usr/bin/qemu-i386-static --magic '\x7fELF\x01\x01\x01\x03\x00\x00\x00\x00\x00\x00\x00\x00\x03\x00\x03\x00\x01\x00\x00\x00' --mask '\xff\xff\xff\xff\xff\xff\xff\xfc\xff\xff\xff\xff\xff\xff\xff\xff\xf8\xff\xff\xff\xff\xff\xff\xff'
-
-sudo service binfmt-support start
-
-sudo dpkg --add-architecture i386
-sudo apt update
-sudo apt install gcc:i386</code></pre></figure>
-
-
-Now, each time you start up you **have to do** the "sudo service binfmt-support start"  again!  
-
-If this still doesn't work, then perhaps Option #2 is the way to go. 
-
----
-
-</p></p></p>
+</p></p>
 
 </div>
 
@@ -392,22 +339,22 @@ If this still doesn't work, then perhaps Option #2 is the way to go.
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2020-12-15 08:57:24 -1000</span></p>
+        Last update on: <span>2021-01-08 16:33:13 -1000</span></p>
 
       <p style="margin: 0">
         
-        1 modules
+        2 modules
         
-        | 0 outcomes
-        
-        
-        | 5 readings
+        | 11 outcomes
         
         
-        | 1 experiences
+        | 56 readings
         
         
-        | 0 assessments
+        | 10 experiences
+        
+        
+        | 17 assessments
         
       </p>
     </div>

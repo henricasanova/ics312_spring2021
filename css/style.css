@@ -1,5 +1,13 @@
 /* Use this file to make simple customizations to your site theme. */
 
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 5px;
+}
+
 /* Make the YouTube Videos responsive. */
 .video-container {
     position: relative;

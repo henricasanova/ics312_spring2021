@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Homework Assignment #4 | ICS 312 Spring 2021 </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+
+  <!--  Load bootswatch-based Morea theme file. -->
+  <link rel="stylesheet" href="/ics312_spring2021/css/themes/cerulean/bootstrap.min.css">
+  <link rel="stylesheet" href="/ics312_spring2021/css/style.css">
+  <link rel="stylesheet" href="/ics312_spring2021/css/syntax.css">
+  <link rel="shortcut icon" href="/ics312_spring2021/favicon.ico" type="image/x-icon"/>
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
+  <![endif]-->
+
+  <!-- Load Bootstrap JavaScript components -->
+  <script src="//code.jquery.com/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+  
+  <script type="text/javascript"
+          src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  
+
+  <script>
+    $(window).load(function () {
+      // If on a page associated with a navbar item, make its navbar item 'active'.
+      $('.navbar-nav').find('a[href="' + location.pathname + '"]').parents('li').addClass('active');
+    });
+  </script>
+
+</head>
+<body>
+<!-- Responsive navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <!--  Display three horizontal lines when navbar collapsed. -->
+        <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/ics312_spring2021/index.html"> ICS 312 Spring 2021 </a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="/ics312_spring2021/modules/">Modules</a></li>
+        
+        <li><a href="/ics312_spring2021/outcomes/">Outcomes</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/readings/">Readings</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/experiences/">Experiences</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/assessments/">Assessments</a></li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<div class="breadcrumb-bar">
+  <div class="container">
+    <ol class="breadcrumb">
+      
+      <li><a href="/ics312_spring2021/">Home</a></li>
+      <li><a href="/ics312_spring2021/modules">Modules</a></li>
+      <li><a href="/ics312_spring2021/modules/"></a></li>
+      <li class="active">Homework Assignment #4</li>
+    </ol>
+  </div>
+</div>
+
+
+<div class="container">
+  <h2 id="homework-assignment-4-40-pts">Homework Assignment #4 [40 pts]</h2>
+
+<hr />
+
+<p>You are expected to do your own work on all homework assignments.  You
+may (and are encouraged to) engage in <em>general</em> discussions with
+your classmates regarding the assignments, but specific details of a
+solution, including the solution itself, must always be your
+own work. (See the statement of Academic Dishonesty on the 
+<a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a>.)</p>
+
+<h4 id="how-to-turn-in">How to turn in?</h4>
+
+<p>Assignments need to be turned in via <a href="https://laulima.hawaii.edu/portal">Laulima</a>. Check the <a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a> for the late assignment policy for the course.</p>
+
+<h4 id="what-to-turn-in">What to turn in?</h4>
+
+<p>You should turn in a single <b>plain text or PDF</b> file named <tt>README.txt</tt> or <tt>README.pdf</tt>
+with your answers to the assignment’s questions.</p>
+
+<hr />
+
+<h3 id="exercise-1-overflow-40-pts">Exercise #1: Overflow [40 pts]</h3>
+
+<p>For each of the following hex additions:</p>
+
+<ul>
+  <li><strong>2-byte</strong> quantities: 8FE0 + B036</li>
+  <li><strong>2-byte</strong> quantities: E5 + 0E</li>
+  <li><strong>1-byte</strong> quantities: 5243 + 7DBC</li>
+  <li><strong>1-byte</strong> quantities: E5 + 3A</li>
+</ul>
+
+<p>Answer these 3 questions:</p>
+
+<ul>
+  <li>say whether the carry bit is set;</li>
+  <li>say whether the overflow bit is set <strong>and</strong> explain your reasoning;</li>
+  <li>say what would be printed by <tt>print_int</tt> if the result were
+<em>sign-extended</em> into the EAX register (Remember that this macro prints
+<strong>signed</strong> numbers in decimal representation).</li>
+</ul>
+
+<hr />
+
+
+</div>
+
+
+
+
+<script src="/ics312_spring2021/js/scrollIfAnchor.js"></script>
+
+<div class="footer-background hidden-print">
+  <footer>
+    <div class="container page-footer">
+      
+      No footer page content supplied.
+      
+      <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
+        Last update on: <span>2021-01-08 16:33:13 -1000</span></p>
+
+      <p style="margin: 0">
+        
+        2 modules
+        
+        | 11 outcomes
+        
+        
+        | 56 readings
+        
+        
+        | 10 experiences
+        
+        
+        | 17 assessments
+        
+      </p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

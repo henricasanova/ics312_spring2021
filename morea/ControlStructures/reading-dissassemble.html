@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Disassembling code with NASM | ICS 312 Spring 2021 </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+
+  <!--  Load bootswatch-based Morea theme file. -->
+  <link rel="stylesheet" href="/ics312_spring2021/css/themes/cerulean/bootstrap.min.css">
+  <link rel="stylesheet" href="/ics312_spring2021/css/style.css">
+  <link rel="stylesheet" href="/ics312_spring2021/css/syntax.css">
+  <link rel="shortcut icon" href="/ics312_spring2021/favicon.ico" type="image/x-icon"/>
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
+  <![endif]-->
+
+  <!-- Load Bootstrap JavaScript components -->
+  <script src="//code.jquery.com/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+  
+  <script type="text/javascript"
+          src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  
+
+  <script>
+    $(window).load(function () {
+      // If on a page associated with a navbar item, make its navbar item 'active'.
+      $('.navbar-nav').find('a[href="' + location.pathname + '"]').parents('li').addClass('active');
+    });
+  </script>
+
+</head>
+<body>
+<!-- Responsive navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <!--  Display three horizontal lines when navbar collapsed. -->
+        <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/ics312_spring2021/index.html"> ICS 312 Spring 2021 </a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        
+        <li><a href="/ics312_spring2021/modules/">Modules</a></li>
+        
+        <li><a href="/ics312_spring2021/outcomes/">Outcomes</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/readings/">Readings</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/experiences/">Experiences</a></li>
+        
+        
+        <li><a href="/ics312_spring2021/assessments/">Assessments</a></li>
+        
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<div class="breadcrumb-bar">
+  <div class="container">
+    <ol class="breadcrumb">
+      
+      <li><a href="/ics312_spring2021/">Home</a></li>
+      <li><a href="/ics312_spring2021/modules">Modules</a></li>
+      <li><a href="/ics312_spring2021/modules/"></a></li>
+      <li class="active">Disassembling code with NASM</li>
+    </ol>
+  </div>
+</div>
+
+
+<div class="container">
+  <h2 id="disassembling-code-with-nasm">Disassembling code with NASM</h2>
+
+<p>
+A compile takes as input high-level source code and outputs assembly code, which is then assembled into binary. Most assemblers come with a <b>disassembler</b> that can be used to convert binary code back to (human readable... sort of) assembly code. 
+</p>
+
+<p>With NASM, the disassembler is called <b>ndisasm</b>. Say you have
+a C program called <tt>stuff.c</tt> as follows:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mh">0x1234</span><span class="p">;</span>
+
+        <span class="n">sum</span> <span class="o">+=</span> <span class="mh">0xABCDEF</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"sum=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">sum</span><span class="p">);</span>
+        <span class="n">sum</span> <span class="o">=</span> <span class="mh">0x2345</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Here is a sequence of commands to 
+look at the assembly code generated by the compiler (in a 32-bit world):</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">% gcc -m32 cprogram.c -o cprogram
+% ndisasm -b 32 cprogram &gt; cprogram.asm</code></pre></figure>
+
+<p>The file <tt>cprogram.asm</tt> now contains the disassembled code. On my Linux box it has 3323 lines!  You note that in the C code I have put some “easy to spot once translated to assembly” constant. The relevant piece of assembly is:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">000003ED  C744241C34120000  mov dword [esp+0x1c],0x1234
+000003F5  C744241800000000  mov dword [esp+0x18],0x0
+000003FD  EB0D              jmp short 0x40c
+000003FF  8B442418          mov eax,[esp+0x18]
+00000403  0144241C          add [esp+0x1c],eax
+00000407  8344241801        add dword [esp+0x18],byte +0x1
+0000040C  837C241809        cmp dword [esp+0x18],byte +0x9
+00000411  7EEC              jng 0x3ff
+00000413  B810850408        mov eax,0x8048510
+00000418  8B54241C          mov edx,[esp+0x1c]
+0000041C  89542404          mov [esp+0x4],edx
+00000420  890424            mov [esp],eax
+00000423  E8D8FEFFFF        call dword 0x300
+00000428  C744241C45230000  mov dword [esp+0x1c],0x2345</code></pre></figure>
+
+<p>
+On each line the disassembler conveniently prints the address of the instruction and the binary code for the instruction on each line. 
+</p>
+<p>It also prints the assembly code, but all addresses are in hex (we “lost” the high-level code information such as variable names).  Still, it’s possible to reverse-engineer what the program does if you know assembly.</p>
+
+
+</div>
+
+
+
+
+<script src="/ics312_spring2021/js/scrollIfAnchor.js"></script>
+
+<div class="footer-background hidden-print">
+  <footer>
+    <div class="container page-footer">
+      
+      No footer page content supplied.
+      
+      <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
+        Last update on: <span>2021-01-08 16:33:13 -1000</span></p>
+
+      <p style="margin: 0">
+        
+        2 modules
+        
+        | 11 outcomes
+        
+        
+        | 56 readings
+        
+        
+        | 10 experiences
+        
+        
+        | 17 assessments
+        
+      </p>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

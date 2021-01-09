@@ -1,0 +1,304 @@
+---
+title: "Assignment #6"
+published: true
+morea_summary: ""
+morea_id: experiencebitoperations
+morea_type: experience
+morea_labels:
+  - Due TBD
+---
+
+
+## Programming Assignment -- Bit Operations
+
+<hr>
+
+You are expected to do your own work on all homework assignments.  You
+may (and are encouraged to) engage in <i>general</i> discussions with
+your classmates regarding the assignments, but specific details of a
+solution, including the solution itself, must always be your
+own work. (See the statement of Academic Dishonesty on the 
+<a href="{{ site.baseurl }}/morea/GettingStarted/reading-syllabus.html">Syllabus</a>.) 
+
+<b><font face="sans-serif"> What to turn in? </font></b><br>
+
+You must turn in an archive (zip, tar, etc.) that contains your
+assembly code, the asm_io.asm, asm_io.inc, driver.c files, and a
+Makefile that compiles all your assignments</b>. If you're not sure
+how to create a Makefile that compiles 2 or more executables from 2 or
+more source files, here is <a href="./Makefile">an example</a>. (You want to save this file
+and not cut-and-past-it because in make there is a difference between white spaces
+and tab characters!) <b>Failure to
+provide an archive that can simply be uncompressed, and in which one can
+simply type "make" to generate all executables, will result in a 50% 
+grade penalty. </b>Don't hesitate to ask the instructor or TA for help on this
+if needed.
+
+Assignments need to be turned in via <a href="https://laulima.hawaii.edu/portal">Laulima</a>. Check the <a href="{{ site.baseurl }}/morea/GettingStarted/reading-syllabus.html">Syllabus</a> for the late assignment policy for the course.
+<hr>
+
+
+<b>NOTE:</b> There are many ways to implement solutions to the exercises
+below, but the expectation is that you'll be using bitwise operations. With
+bitwise operations the programs can be rather straightforward and short.
+Not using bitwise operations is allowed, but at your own risk and on your own.  
+
+---
+
+### Exercise #1: Bitwise operations for bioinformatics
+
+#### Overview
+
+You are working for a biotech company and are in charge of simple
+pattern-searching applications. As you (may) know, DNA sequences are
+encoded using 4 characters (A, C, T, and G), which each represents an
+amino-acid. Finding particular patterns in such sequences is a common
+problem in DNA sequence analysis. For simplicity, because their ASCII codes
+are consecutive, we will assume here that the 4 characters are A, B, C, and
+D.
+
+In a nutshell, we get as input strings of A's, B's, C's and D's, and look for
+particular substrings, or patterns.  However, **these strings are not encoded as characters strings**. Since we have only 4 possible characters, each can be encoded on only 2 bits. So we have the following encoding for each character:
+** A: 00, B: 01, C: 10, D: 11 **.  
+
+
+This encoding scheme saves a lot of RAM compared to storing each character
+as an 8-bit ASCII character. For instance, for a sequence of 10,000 amino
+acides, using ASCII would use 9KiB while the above encoding uses 2.4KiB.
+Saving RAM is useful because RAM space is scarce (depending on how many
+sequences you need to store).  But, often more importantly, a smaller
+memory footprint leads to huge performance boosts (see ICS432).
+
+
+As an example, string "ABCD AADA CCCC BACA" is encoded as 4-byte value "00011011000011001010101001001000", which happens to be decimal 453814856.
+
+
+In fact, the input you get to your program is siply a 32-bit integer, which then represents a 16-character string of A's, B's, C's, and D's. 
+
+
+<br>
+
+#### Implementation constraints
+
+All questions hereafter are to be done using bitwise operations. In other
+hands, the objective is not to deal with strings of ASCII characters (which would be extremely wasteful since we only have 4 possible characters), but with encoding in binary of our DNS sequences. In addition, you must comply with the following two constraints:
+
+__Constraint #1:__ Your .data segment must be exactly as shown below, i.e., 
+only used to define strings to be printed to the terminal:
+
+{% highlight text %}
+segment .data
+        msg1 db "Enter an integer: ",0
+        msg2 db "Binary representation: ", 0
+        msg3 db "String representation: ", 0
+        msg4 db "Pattern DBB occurs this many times: ",0
+        msg5 db "Enter a 2-character pattern: ",0
+        msg6 db "Your pattern occurs this many times: ",0
+        msg7 db "Enter a pattern with at most 16 characters: ",0
+        msg8 db "Your pattern occurs this many times: ",0
+        msg9 db "Pattern B* occurs this many times: ", 0
+{% endhighlight %}
+
+__Constraint #2:__ Your .bss segment must not reserve more than __20 bytes__.
+
+---
+
+#### Question #1: Printing binary string of input [XXX pts]
+
+Write an assembly program called <tt>hw6_ex1</tt>, stored in file
+<tt>hw6_ex1.asm</tt>, which prompts to enter an integer, and prints out its
+32-bit binary representation. You can assume that the user always enters a
+valid integer encodable on 32-bits. 
+
+Here are example interactions with the program, which you should match:
+
+{% highlight text %}
+% ./hw7_ex1 
+Enter an integer: 32
+Binary representation: 00000000000000000000000000100000
+% ./hw7_ex1 
+Enter an integer: -3124
+Binary representation: 11111111111111111111001111001100
+% ./hw7_ex1 
+Enter an integer: 5123412
+Binary representation: 00000000010011100010110101010100
+% ./hw7_ex1
+Enter an integer: -1
+Binary representation: 11111111111111111111111111111111
+{% endhighlight %}
+
+---
+
+#### Question #2: Printing the encoded string [XXX pts]</h3>
+
+Augment your program so that it also prints the string representation
+of the integer, i.e., as a strings of A's, B's, C's, and D's. 
+
+Here are example interactions with the program, which you should match:
+
+{% highlight text %}
+% ./hw7_ex1 
+Enter an integer: 32
+Binary representation: 00000000000000000000000000100000
+String representation: AAAAAAAAAAAAACAA
+% ./hw7_ex1 
+Enter an integer: -3124
+Binary representation: 11111111111111111111001111001100
+String representation: DDDDDDDDDDADDADA
+% ./hw7_ex1 
+Enter an integer: 5123412
+Binary representation: 00000000010011100010110101010100
+String representation: AAAABADCACDBBBBA
+% ./hw7_ex1
+Enter an integer: -1
+Binary representation: 11111111111111111111111111111111
+String representation: DDDDDDDDDDDDDDDD
+{% endhighlight %}
+
+
+---
+
+#### Question #3: Finding the DBB pattern [15pts]</h3>
+
+Augment your program so that it counts the number of occurrences
+of pattern DBB in the input sequence.  Again, you should implement this
+with bitwise operations without treating sequences as set of ASCII
+characters, but instead dealing with the binary encoding directly. 
+
+Here are example interactions with the program, which you should match:
+
+{% highlight text %}
+% hw7_ex1
+Enter an integer: 412421
+Binary representation: 00000000000001100100101100000101
+String representation: AAAAAABCBACDAABB
+Pattern DBB occurs this many times: 0
+% hw7_ex1
+Enter an integer: 902854019
+Binary representation: 00110101110100000111010110000011
+String representation: ADBBDBAABDBBCAAD
+Pattern DBB occurs this many times: 2
+% hw7_ex1
+Enter an integer: -707480109
+Binary representation: 11010101110101001011010111010011
+String representation: DBBBDBBACDBBDBAD
+Pattern DBB occurs this many times: 3
+{% endhighlight %}
+
+---
+
+#### Question #4: Finding a 2-character pattern [XXXpts]</h3>
+
+Augment your program so that it asks the user for a 2-character pattern and
+then reports the count for that pattern. You can assume that the
+pattern is valid (only A's, B's, C's, and D's, exactly 2 characters). 
+Again, your program must deal directly with the binary encoding
+scheme and use bitwise operations. 
+
+Here are example interactions with the program, which you should match:
+
+{% highlight text %}
+% hw7_ex1
+Enter an integer: -91825721
+Binary representation: 11111010100001101101100111000111
+String representation: DDCCCABCDBCBDABD
+Pattern DBB occurs this many times: 0
+Enter a 2-character pattern: AB
+Your pattern occurs this many times: 2
+% hw7_ex1
+Enter an integer: 4120951
+Binary representation: 00000000001111101110000101110111
+String representation: AAAAADDCDCABBDBD
+Pattern DBB occurs this many times: 0
+Enter a 2-character pattern: AA
+Your pattern occurs this many times: 4
+{% endhighlight %}
+
+  - Note above that patterns are overlapping. For instance, in the second
+    example, pattern AA occurs 4 times in substring AAAAA
+
+  - Remember that when grabbing character input you may have to add
+    extra calls to <tt>read_char</tt> to consume carriage returns (as
+    we've seen in previous assignments). In particular, <tt>read_int</tt>
+    does NOT consume the carriage return typed by the user after
+    the integer is entered. So you likely must insert a call to
+    <tt>read_char</tt> before actually reading the 2 characters
+    for the pattern.
+
+---
+
+#### Question #5: Finding an arbitrary pattern [XXXpts]</h3>
+
+Augment your program so that it asks the user for an arbitrary pattern that
+contains up to 16 characters, and prints out how many (overlapping)
+occurences of the pattern are found. You can assume that the pattern is valid
+(only A's, B's, C's and D's, and at most 16 characters). 
+
+Here are example interactions with the program, which you should match:
+
+{% highlight text %}
+% hw7_ex1
+Enter an integer: 1295299792
+Binary representation: 01001101001101001011010011010000
+String representation: BADBADBACDBADBAA
+Pattern DBB occurs this many times: 0
+Enter a 2-character pattern: BA
+Your pattern occurs this many times: 5
+Enter a pattern with at most 16 characters: BADB
+Your pattern occurs this many times: 3
+% hw7_ex1
+Enter an integer: -1
+Binary representation: 11111111111111111111111111111111
+String representation: DDDDDDDDDDDDDDDD
+Pattern DBB occurs this many times: 0
+Enter a 2-character pattern: DD
+Your pattern occurs this many times: 15
+Enter a pattern with at most 16 characters: DDDDDDDD
+Your pattern occurs this many times: 9
+Pattern B* occurs this many times: 0
+% hw7_ex1
+Enter an integer: 5123111
+Binary representation: 00000000010011100010110000100111
+String representation: AAAABADCACDAACBD
+Pattern DBB occurs this many times: 0
+Enter a 2-character pattern: AB
+Your pattern occurs this many times: 1
+Enter a pattern with at most 16 characters: CCDA
+Your pattern occurs this many times: 0
+{% endhighlight %}
+
+---
+
+#### Question #5: Finding pattern B+ [XXXpts]</h3>
+
+Augment your program so that it reports the number of occurrences
+of pattern B+, i.e., "a sequence of 1 or more B's".  For instance,
+pattern B+ occurs once in "BBBBBBBB" and twice in "BBBAABCCCC". 
+
+Here are example interactions with the program, which you should match:
+
+{% highlight text %}
+% hw7_ex1
+Enter an integer: -4123477 
+Binary representation: 11111111110000010001010010101011
+String representation: DDDDDAABABBACCCD
+Pattern DBB occurs this many times: 0
+Enter a 2-character pattern: DD
+Your pattern occurs this many times: 4
+Enter a pattern with at most 16 characters: CCC
+Your pattern occurs this many times: 1
+Pattern B* occurs this many times: 2
+% hw7_ex1
+Enter an integer: 37182811
+Binary representation: 00000010001101110101110101011011
+String representation: AAACADBDBBDBBBCD
+Pattern DBB occurs this many times: 2
+Enter a 2-character pattern: AA
+Your pattern occurs this many times: 2
+Enter a pattern with at most 16 characters: BDB
+Your pattern occurs this many times: 2
+Pattern B* occurs this many times: 3
+{% endhighlight %}
+
+
+
