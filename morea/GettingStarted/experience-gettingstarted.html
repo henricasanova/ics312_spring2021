@@ -104,7 +104,9 @@ this “Linux for ICS312” as just something you have to do, but as a
   <li><a href="#option1">Option #1</a> Install Linux on your own system</li>
   <li><a href="#option2">Option #2</a> Install a terminal-only Linux Virtual Machine using Vagrant</li>
   <li><a href="#option3">Option #3</a> Install a Linux Virtual Machine using Virtual Box</li>
-  <li><a href="#option4">Option #4</a> If you are using Windows 10, use WSL to run and install Ubuntu</li>
+  <li><a href="#option4">Option #4</a> Get a Linux Virtual Machine on the cloud (e.g., using AWS)</li>
+  <li><a href="#option5">Option #5</a> Use uhunix.hawaii.edu</li>
+  <li><a href="#option6">Option #6</a> If you are using Windows 10, use WSL2 to run and install Ubuntu</li>
 </ul>
 
 <p>Option #2 above is likely the easiest, as well as option #4 if you’re running Windows 10.</p>
@@ -218,7 +220,37 @@ they’re always on your host!</p>
 
 <p><br /></p>
 
-<h4 id="option-4-run-ubuntu-via-wsl-on-windows-10">Option #4: Run Ubuntu via WSL on Windows 10</h4>
+<h4 id="option-4-get-a-linux-virtual-machine-on-the-cloud-eg-using-aws">Option #4: Get a Linux Virtual Machine on the cloud (e.g., using AWS)</h4>
+
+<p>Plenty of information on-line on how to do this!</p>
+
+<p><a name="option5"></a></p>
+
+<p><br /></p>
+
+<h4 id="option-5-use-uhunixhawaiiedu">Option #5: Use uhunix.hawaii.edu</h4>
+
+<p>You all have an account on uhunix.hawaii.edu (using your UH username and password), which runs Linux.  I have installed NASM in my home area. You should update your <tt>.bashrc</tt> file (in your home directory) to include the following line:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">export PATH=$PATH:/home/15/henric/local/bin</code></pre></figure>
+
+<p>once you’ve done this, simply do</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">source ~/.bashrc</code></pre></figure>
+
+<p>And type:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">nasm</code></pre></figure>
+
+<p>which should say: “nasm: fatal: no input file specified.  Type nasm -h for help.”.</p>
+
+<p>You’should be all set, and you can <strong>skip Section II (Installing NASM) below and directly go to Section III</strong></p>
+
+<p><a name="option6"></a></p>
+
+<p><br /></p>
+
+<h4 id="option-6-run-ubuntu-via-wsl-on-windows-10">Option #6: Run Ubuntu via WSL on Windows 10</h4>
 
 <p><strong>WSL2</strong> supports 32-bit binaries. See these two links.</p>
 <ul>
@@ -339,7 +371,7 @@ If this fails, contact your TA/instructor.
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-01-08 16:42:42 -1000</span></p>
+        Last update on: <span>2021-01-12 09:26:46 -1000</span></p>
 
       <p style="margin: 0">
         
