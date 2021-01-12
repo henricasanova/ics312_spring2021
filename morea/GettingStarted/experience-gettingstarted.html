@@ -146,7 +146,7 @@ here are a few easy steps:</p>
 <ul>
   <li><a href="https://www.virtualbox.org/wiki/Downloads">Download an install Virtual Box</a> (but don’t do any kind of VM setup… just install the software)
     <ul>
-      <li>On Mac you may get an error “The installation failed”. This is to be resolved by allowing Ocracle applications to be downloaded in the Security &amp; Privacy section of System Preferences.</li>
+      <li>On Mac you may get an error “The installation failed”. This is to be resolved by allowing Oracle applications to be downloaded in the Security &amp; Privacy section of System Preferences.</li>
     </ul>
   </li>
   <li><a href="https://www.vagrantup.com/docs/installation/">Download and install Vagrant</a></li>
@@ -156,7 +156,11 @@ here are a few easy steps:</p>
       <li>If you’re a Windows user, here is a likely <a href="https://www.sitepoint.com/getting-started-vagrant-windows/">helpful site about Vagrant and Windows</a></li>
     </ul>
   </li>
-  <li>Then type the command: <tt>vagrant up</tt></li>
+  <li>Then type the command: <tt>vagrant up</tt>
+    <ul>
+      <li>On Windows (on an AMD processor) you may get a “There was an error…” message with in particular the message “Stderr: VBoxManage.exe: Not in a hypervisor partition (HVP=0) (VERR_NEM_NOT_AVAILABLE). VBoxManage.exe: error: AMD-V is disabled in the BIOS…”. In this case, you need to go into the BIOS settings and search for the “SVM Mode” setting,m which you need to enable before running vagrant.</li>
+    </ul>
+  </li>
   <li>After a few minutes, your VM is running, but you’re not “in” it</li>
   <li>To get a terminal to your VM: <tt>vagrant ssh</tt>, and voila, welcome to your Linux VM</li>
   <li>Once you log out from the VM, you can shut it down with: <tt>vagrant halt</tt></li>
@@ -375,7 +379,7 @@ If this fails, contact your TA/instructor.
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-01-12 10:39:11 -1000</span></p>
+        Last update on: <span>2021-01-12 13:42:05 -1000</span></p>
 
       <p style="margin: 0">
         
