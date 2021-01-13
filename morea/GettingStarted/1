@@ -1,0 +1,303 @@
+---
+title: "Homework Assignment #0"
+published: true
+morea_id: experiencegettingstarted
+morea_summary: "Making sure that you're set up with the software needed for this course"
+morea_type: experience
+morea_sort_order: 0
+morea_labels: 
+  - Not graded
+  - Do ASAP
+---
+
+
+## Homework Assignment #0 [0 pts]
+
+Several assignments in this course require that you a Linux platform. This
+"assignment" guides you through the steps you need to follow to set up your
+own Linux environment. Note that Having some experience with Linux is
+crucial for your professional prospects. Almost every back-end system out
+there runs Linux.  So if you're not familiar with Linux, don't think of
+this "Linux for ICS312" as just something you have to do, but as a
+_valuable experience_. 
+
+
+---
+
+### I. Getting Access to a Linux platform
+
+If you're already running Linux in one way or another, you can probably skip to the <a href="#nasm">Installing NASM section</a> below.  Otherwise, here are some options:
+
+  - <a href="#option1">Option #1</a> Install Linux on your own system 
+  - <a href="#option2">Option #2</a> Install a terminal-only Linux Virtual Machine using Vagrant
+  - <a href="#option3">Option #3</a> Install a Linux Virtual Machine using Virtual Box
+  - <a href="#option4">Option #4</a> Get a Linux Virtual Machine on the cloud (e.g., using AWS)
+  - <a href="#option5">Option #5</a> Use uhunix.hawaii.edu
+  - <a href="#option6">Option #6</a> If you are using Windows 10, use WSL2 to run and install Ubuntu
+
+
+Option #2 above is likely the easiest, as well as option #4 if you're running Windows 10.
+
+
+<a name="option1"></a>
+
+#### Option #1: Run Linux on your own system
+
+This is of course the slam dunk. Many of you are already running Linux and
+can likely stop reading now. 
+Running Linux on your own machine is of course the
+ultimate way to gain experience, and most people get started with the ever
+so popular <a href="https://www.ubuntu.com/desktop">Ubuntu desktop
+distribution</a>.
+
+If you're not quite ready to replace your current OS with Linux, you can go
+<i>dual boot</i> by installing a Linux partition on your machine.  This is
+pretty standard, and there are many step-by-step guides on-line. A decent
+one for setting up a dual-boot Windows/Linux machine is on the <a
+href="https://help.ubuntu.com/community/WindowsDualBoot">Ubuntu Web
+site</a>. Ubuntu also provides a <a
+href="http://www.ubuntu.com/desktop/get-ubuntu/windows-installer">Windows
+installer</a>, which I've never tried myself but has been used successfully
+by many people. See this page for <a
+href="https://help.ubuntu.com/community/MactelSupportTeam/AppleIntelInstallation">MacOS/Ubuntu</a>
+dual boot. These links are active but may be stale. Web search engines are
+your friends for figuring this out.
+
+
+<a name="option2"></a>
+
+
+#### Option #2: Run Terminal-only Linux using Vagrant
+
+<a href="https://www.vagrantup.com">Vagrant</a> is a great tool that sits
+on top of virtualization frameworks and allows for super quick installation
+and usage. I use it on top of <a href="https://www.virtualbox.org/">Virtual
+Box</a>, which is free. The <a href="https://www.vagrantup.com/intro/getting-started/index.html">Getting
+Started</a> page on the Vagrant Web site is really good, but just in cases
+here are a few easy steps:
+
+  - <a href="https://www.virtualbox.org/wiki/Downloads">Download an install Virtual Box</a> (but don't do any kind of VM setup... just install the software)
+    - On Mac you may get an error "The installation failed". This is to be resolved by allowing Oracle applications to be downloaded in the Security & Privacy section of System Preferences. 
+  - <a href="https://www.vagrantup.com/docs/installation/">Download and install Vagrant</a>
+  - Create a directory someplace convenient, say <tt>my_vagrant</tt>, and <tt>cd</tt> to that directory
+  - In that directory, using whatever terminal on your system, type the command: <tt>vagrant init ubuntu/bionic64</tt>
+    - If you're a Windows user, here is a likely <a href="https://www.sitepoint.com/getting-started-vagrant-windows/">helpful site about Vagrant and Windows</a>
+  - Then type the command: <tt>vagrant up</tt>
+    - On Windows (on an AMD processor) you may get a "There was an error..." message with in particular the message "VBoxManage.exe: error: AMD-V is disabled in the BIOS...". In this case, you need to go into the BIOS settings and search for the "SVM Mode" setting,m which you need to enable before running vagrant. 
+    - On Windows (on an Intel processor) you may get a "There was an error..." message with in particular the message "VBoxManage.exe: error: AMD-V is disabled in the BIOS...". In this case, you need to go into the BIOS settings and search for the "VT-x" setting,m which you need to enable before running vagrant. 
+    - Another reason for the above problems is that Window's Hyper-V must be disabled (Control Panel -> Program And Features -> Turn Windows Features on or off).
+  - After a few minutes, your VM is running, but you're not "in" it
+  - To get a terminal to your VM: <tt>vagrant ssh</tt>, and voila, welcome to your Linux VM
+  - Once you log out from the VM, you can shut it down with: <tt>vagrant halt</tt>
+
+Try out the above to make sure everything works. This is the most basic use
+of Vagrant. Your notice that once you've done all the above, you'll have a file called
+<tt>Vagrantfile</tt>, which you can customize later if you want. The Vagrant site has tons of good information about additional
+capabilities and features.  Remember that you must always be in your <tt>my_vagrant</tt> directory.
+
+<font color="red" size="+1"><b>IMPORTANT:</b> </font> A very useful feature
+is that your <tt>my_vagrant</tt> directory on your host is mounted as
+<tt>/vagrant/</tt> on your VM! So the files you keep there (i.e., your
+programming assignments) are visible both on your host (e.g., for editing)
+and on your VM (e.g., for compiling/running).  In addition,  if your VM may
+become compromised, you can always re-install from scratch but you haven't
+lost your files since they're always on your host!  Note that this is
+<tt>/vagrant</tt> on the VM, that is a directory at the root (not, for
+instance, <tt>/home/vagrant</tt>, which is your home directory on your VM.
+
+So, for instance, say you have your homework assignment on your VM in your home directory,
+and that it is in a directory called <tt>my_homework</tt>. This is how you would create
+a <tt>.tar</tt> archive and copy it to your host (i.e., your own computer):
+
+{%highlight text%}
+% ls
+my_homework/
+
+% zip -r my_homework.zip my_homework
+
+% cp my_homework.zip /vagrant
+{%endhighlight%}
+
+And now, on your computer, in the same directory in which you typed <tt>vagrant ssh</tt> you'll
+see that file <tt>my_homework.tar</tt> has magically appeared. 
+
+<font color="red" size="+1"><b>END IMPORTANT</b> </font> 
+
+<a name="option3"></a>
+
+
+#### Option #3: Run GUI-enabled Linux using Virtual Box
+
+Vagrant above gives you very basic Terminal access, which is fast. However,
+perhaps you want a full-features Ubuntu GUI, at the risk of it running
+slowly on your system. In this case, you want to use Virtual Box (or
+whatever Virtualization framework you want/have installed), and create and
+start your VM that way. There are plenty of on-line documentation/tutorials on how to install
+Ubuntu on VirtualBox. 
+You should get the 17.04 Ubuntu
+desktop distribution, which you can get from the <a
+href="http://mirror.ancl.hawaii.edu/linux/ubuntu-releases/">UH mirror</a>
+(e.g., download the file named <tt>ubuntu-16.04-desktop-i386.iso</tt>.)  
+
+
+<font color="red" size="+1"><b>IMPORTANT</b> </font> 
+
+You absolutely want to set up a Shared
+Folder (which works as the <tt>/vagrant/</tt> directory in Option #2). This
+way, the files you keep there (i.e., your programming assignments) are
+visible both on your host (e.g., for editing) and on your VM (e.g., for
+compiling/running).  In addition,  if your VM may become compromised, you
+can always re-install from scratch but you haven't lost your files since
+they're always on your host!
+
+<font color="red" size="+1"><b>END IMPORTANT</b> </font> 
+
+<a name="option4"></a>
+
+<br>
+
+#### Option #4: Get a Linux Virtual Machine on the cloud (e.g., using AWS)
+
+Plenty of information on-line on how to do this!
+
+
+<a name="option5"></a>
+
+<br>
+
+#### Option #5: Use uhunix.hawaii.edu
+
+You all have an account on uhunix.hawaii.edu (using your UH username and password), which runs Linux.  I have installed NASM in my home area. You should update your <tt>.bashrc</tt> file (in your home directory) to include the following line:
+
+{%highlight text%}
+export PATH=$PATH:/home/15/henric/local/bin
+{%endhighlight %}
+
+once you've done this, simply do
+
+{%highlight text%}
+source ~/.bashrc
+{%endhighlight %}
+
+And type:
+
+{%highlight text%}
+nasm
+{%endhighlight %}
+
+which should say: "nasm: fatal: no input file specified.  Type nasm -h for help.". 
+
+You'should be all set, and you can **skip Section II (Installing NASM) below and directly go to Section III**
+
+
+
+<a name="option6"></a>
+
+<br>
+
+#### Option #6: Run Ubuntu via WSL on Windows 10
+
+
+**WSL2** supports 32-bit binaries. See these two links.
+  - [WSL2 vs. WSL1](https://docs.microsoft.com/en-us/windows/wsl/compare-versions)
+  - [WSL2 description, which mentions 32-bit binaries](https://medium.com/@vishwa1234567891/windows-subsystem-for-linux-wsl-2-0-f95d6f0b932)
+
+So, as long as you have the latest Windows and have WLS2, you should be all good, and proceed to Step II below. 
+
+
+---
+
+
+<a name="nasm"></a>
+
+### II. Installing NASM
+
+Now that you have access to a Linux machine, you need to install NASM. 
+Assuming you're running Ubuntu, you can use the Ubuntu package
+manager tool with a GUI. However, I typically use only the command-line (you'll find that's a theme throughout the semester) to install packages.
+<p>
+First, 
+ make sure you are connected to the network. Then 
+open a Terminal window and type the following command:
+
+{% highlight text %}
+sudo apt update
+{% endhighlight %}
+
+The <tt>sudo</tt> command runs commands as the super user, and when you
+installed Ubuntu you were placed by default in the list of users who can
+use <tt>sudo</tt>. The <tt>apt</tt> command is used to deal with
+everything related to package management, and in the invocation above, to
+update your package list so that you will not have errors installing new
+packages.  This could take a while. 
+
+Once the package list has been
+updated, then install nasm by typing the following command:
+
+{% highlight text %}
+sudo apt install gcc make nasm gcc-multilib
+{% endhighlight %}
+
+This last package is to make sure that you can generate 32-bit
+executables with the gcc C compiler.
+
+That's it!
+
+
+<hr>
+
+
+<a name="nasm_works"></a>
+
+<h3>III. Checking that NASM works</h3>
+
+I've built a small test case, which is in fact the basic framework we'll be
+using throughout the semester, so that you can check that everything's
+working.  Download the <a href="./nasm_check.tar">nasm_check.tar</a>
+archive to your account on your Linux box, e.g., in your home
+directory. This can be done in many ways, for instance from a Web browser that you're running in your Ubuntu installation. The easiest way may be to
+type in a terminal the command (on one line):
+
+{% highlight text %}
+wget http://henricasanova.github.io/ics312_spring2021/morea/GettingStarted/nasm_check.tar
+{% endhighlight %}
+
+(If you get a "<tt>wget: command not found</tt>" error, simply install <tt>wget</tt> by typing the command "<tt>sudo apt install wget</tt>")
+<p>
+
+Once the archive is in your working directory, you can unarchive it by typing the command:
+
+{% highlight text %}
+tar -xvf nasm_check.tar
+{% endhighlight %}
+
+This will create a directory named <tt>nasm_check</tt>. 
+Go to that directory:
+
+{% highlight text %}
+cd  nasm_check
+{% endhighlight %}
+
+and type the command:
+
+{% highlight text %}
+make
+{% endhighlight %}
+
+You should get some output, and the last line should be: "It works!". If
+not, then you should send me an e-mail with the whole output.  If you get
+the correct output, you now have everything that you need for all NASM
+assignments.
+
+If you see some "Command not found" message,you can likely install the required software with <tt>sudo apt install ...</tt> as explained in the error message.
+
+If you see some errors like "skipping incompatible ...", you may have to install two new packages:
+
+{% highlight text %}
+sudo apt install lib32gcc-9-dev libx32gcc-9-dev
+{% endhighlight text %}
+
+If this fails, contact your TA/instructor.
+
+
+

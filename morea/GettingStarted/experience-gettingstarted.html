@@ -158,7 +158,9 @@ here are a few easy steps:</p>
   </li>
   <li>Then type the command: <tt>vagrant up</tt>
     <ul>
-      <li>On Windows (on an AMD processor) you may get a “There was an error…” message with in particular the message “Stderr: VBoxManage.exe: Not in a hypervisor partition (HVP=0) (VERR_NEM_NOT_AVAILABLE). VBoxManage.exe: error: AMD-V is disabled in the BIOS…”. In this case, you need to go into the BIOS settings and search for the “SVM Mode” setting,m which you need to enable before running vagrant.</li>
+      <li>On Windows (on an AMD processor) you may get a “There was an error…” message with in particular the message “VBoxManage.exe: error: AMD-V is disabled in the BIOS…”. In this case, you need to go into the BIOS settings and search for the “SVM Mode” setting,m which you need to enable before running vagrant.</li>
+      <li>On Windows (on an Intel processor) you may get a “There was an error…” message with in particular the message “VBoxManage.exe: error: AMD-V is disabled in the BIOS…”. In this case, you need to go into the BIOS settings and search for the “VT-x” setting,m which you need to enable before running vagrant.</li>
+      <li>Another reason for the above problems is that Window’s Hyper-V must be disabled (Control Panel -&gt; Program And Features -&gt; Turn Windows Features on or off).</li>
     </ul>
   </li>
   <li>After a few minutes, your VM is running, but you’re not “in” it</li>
@@ -379,7 +381,7 @@ If this fails, contact your TA/instructor.
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-01-12 13:42:05 -1000</span></p>
+        Last update on: <span>2021-01-12 14:12:37 -1000</span></p>
 
       <p style="margin: 0">
         
