@@ -1,22 +1,3 @@
-<p>
-<ul>
-<li> Many students are confused by registers, feeling that they should appear in C code. But in
-     C we only have global variables (data segment) or local variables (stack).  Changing a 
-     register value does nothing from the perspective of high-level code, until global or
-     local variables are modified. Something like "mov EBX, [EBP+8]"  doesn't modify the data
-     segment or the stack, and therefore does "nothing". If then one does "inc EBX", that still
-     does "nothing". But now, if I do "mov [EBP-4], EBX" THEN I am setting a local variable
-     to 1 plus the first parameter.
-
-<li> Some mistakes seem to come from lack of C knowledge (no main() function???)
-
-<li> Several mistakes were just about not following the C standard (i.e., arguments not in reversed order!)
-
-&lt;/ul&gt;
-&lt;/p&gt;
-
-<p>
-    
 <script src="/ics312_spring2021/js/Chart.js"></script>
 
 <div class="row">
@@ -58,4 +39,4 @@
 
 
 
-</div></p></li></li></li></ul></p>
+</div>

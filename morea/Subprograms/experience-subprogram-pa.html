@@ -84,242 +84,48 @@
 
 
 <div class="container">
-  <h2 id="homework-assignment-8-70-pts">Homework Assignment #8 [70 pts]</h2>
+  <script src="/ics312_spring2021/js/Chart.js"></script>
 
-<hr />
+<div class="row">
+  <div class="col-sm-6">
+    <div class="well">
+      <div style="margin-right: auto; margin-left: auto">
+        <canvas id="experiencesubprogramspa"></canvas>
+      </div>
+     </div>
+  </div>
 
-<p>You are expected to do your own work on all homework assignments.  You
-may (and are encouraged to) engage in <em>general</em> discussions with
-your classmates regarding the assignments, but specific details of a
-solution, including the solution itself, must always be your
-own work. (See the statement of Academic Dishonesty on the 
-<a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a>.)</p>
+  <div class="col-sm-6">
+    
 
-<h4 id="how-to-turn-in">How to turn in?</h4>
+  </div>
 
-<p>Assignments need to be turned in via <a href="https://laulima.hawaii.edu/portal">Laulima</a>. Check the <a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a> for the late assignment policy for the course.</p>
+  <script>
 
-<h4 id="what-to-turn-in">What to turn in?</h4>
+    var moreaChartData = {
+      labels: ,
+      datasets: [ { data:  } ]
+    };
 
-<p>Download the <a href="./ics312_hw8.zip">ics312_hw8.zip</a> archive, unzip
-it, rename the top-level directory as <tt>ics312_hw8_xxx</tt>, where “xxx”
-is your UH username (e.g., for me, it would be <tt>ics312_hw8_henric</tt>).
-<b>Only modify the code in <tt>hw8_functions.asm</tt></b>, as specified in
-the questions below.</p>
+    var moreaChartOptions = {
+      scaleGridLineColor: "gray",
+      scaleFontColor: "darkgray",
+      scaleLineColor: "darkgray",
+      responsive: true,
+      animation: false
+    };
 
-<p><strong>Just turn in your <tt>hw8_functions.asm</tt> file.</strong></p>
+    // Get the context of the canvas element we want to select
+    var ctx = document.getElementById("experiencesubprogramspa").getContext("2d");
+    var myNewChart = new Chart(ctx).Bar(moreaChartData, moreaChartOptions);
 
-<hr />
+  </script>
 
-<h3 id="exercise-1-implementing-a-printarray-function-30-pts">Exercise #1: Implementing a printArray function [30 pts]</h3>
 
-<p>The <tt>hw8_ex1.asm</tt> program included in the archive 
-prompts the user for 10 positive integers and
-then calls a function called <tt>printArray</tt>.</p>
 
-<p>Function <tt>printArray</tt> takes two arguments, an address, say <em>A</em>, and
-a number, say <em>n</em>. It prints a comma-separated list of the <em>n</em> 4-byte
-signed numbers which are stored consecutively starting at the address
-passed in as the first argument, ending with a carriage return. In other
-word, in C this function would be implemented as:</p>
 
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">printArray</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">"%d, "</span><span class="p">,</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">A</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
-<span class="p">}</span></code></pre></figure>
 
-<p>You must fill in the implementation of <tt>printArray</tt>
-in file <tt>hw8_functions.asm</tt>.</p>
-
-<p><b>
-You must not modify any other file in the archive.
-</b></p>
-
-<p>Here are example interactions with the program (‘%’ is the command-line prompt and user input is shown):</p>
-
-<figure class="highlight"><pre><code class="language-text" data-lang="text">% ./hw8_ex1
-Enter an integer: 3
-Enter an integer: 52
-Enter an integer: 645
-Enter an integer: 7
-Enter an integer: 5
-Enter an integer: 2
-Enter an integer: 10
-Enter an integer: 23
-Enter an integer: 41
-Enter an integer: 111
-List:    3, 52, 645, 7, 5, 2, 10, 23, 41, 111
-
-% ./hw8_ex1
-Enter an integer: -12
-Enter an integer: 12
-Enter an integer: -12
-Enter an integer: 4
-Enter an integer: 5
-Enter an integer: 6
-Enter an integer: 7
-Enter an integer: -1300
-Enter an integer: 12341
-Enter an integer: 52
-List:    -12, 12, -12, 4, 5, 6, 7, -1300, 12341, 52</code></pre></figure>
-
-<hr />
-
-<h3 id="exercise-2-implementing-and-using-a-transformedsum-function-20-pts">Exercise #2: Implementing and using a transformedSum function [20 pts]</h3>
-
-<p>Like <tt>hw8_ex1.asm</tt>, the program in <tt>hw8_ex2.asm</tt> prompts the
-user for 10 positive integers and prints them (by calling
-<tt>printArray</tt>). The program then prints 
-the sum of the values in the array, but after transforming each value by
-applying a function to it.</p>
-
-<p>For instance, if the array contains values  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, and
-if the function multiplies a number by 2 and returns it, then
-the program should print 
-110 (which is 2 + 4 + 6 + 8 + 10 + 12 + 14 + 16 + 18 + 20).
-This
-is done by calling a <tt>transformedSum</tt> function, which you have to implement.</p>
-
-<p><tt>transformedSum</tt> takes 3 arguments:</p>
-
-<ul>
-  <li>an address, say <em>A</em>;</li>
-  <li>a number, say <em>n</em>;</li>
-  <li>a pointer to a subprogram, say <em>f</em> (which takes a single 4-byte argument).</li>
-</ul>
-
-<p><tt>transformedSum</tt> operates as follows. It iterates through the <em>n</em> 4-byte values starting
-at the address <em>A</em>. For each such value <em>v</em>, it calls <em>f</em>
-passing it <em>v</em> as a single argument. It computes the sum of all the values returned by
-the calls to <em>f</em>.
-This is a long-winded way of simply saying in C:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="nf">transformedSum</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="kt">int</span><span class="p">))</span> <span class="p">{</span>
-  <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> 
-    <span class="n">sum</span> <span class="o">+=</span> <span class="n">f</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-  <span class="k">return</span> <span class="n">sum</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>You must fill in the implementation for <tt>transformedSum</tt>
-in file <tt>hw8_functions.asm</tt></p>
-
-<p><b>
-You must not modify any other file in the archive.
-</b></p>
-
-<p>The program in <tt>hw8_ex2.asm</tt> defines two functions, <tt>mod_10</tt>
-(which returns the modulo 10 of its argument) and <tt>is_even</tt> (which returns 1
-if its argument is even, 0 otherwise). It then calls
-<tt>transformedSum</tt> twice on the original list, passing it one of these
-two functions each time, and prints the sum.</p>
-
-<p>Here are example interactions with the program (“%” is the command-line prompt and user input is shown):</p>
-
-<figure class="highlight"><pre><code class="language-text" data-lang="text">% ./hw8_ex2
-Enter an integer: 30
-Enter an integer: 40
-Enter an integer: 50
-Enter an integer: 21
-Enter an integer: 22
-Enter an integer: 23
-Enter an integer: 23
-Enter an integer: 23
-Enter an integer: 24
-Enter an integer: 21
-List:    30, 40, 50, 21, 22, 23, 23, 23, 24, 21
-sum(A[i] % 10): 17
-sum(A[i] is even):   5
-
-% ./hw8_ex2
-Enter an integer: 10
-Enter an integer: 10
-Enter an integer: 10
-Enter an integer: 10
-Enter an integer: 10
-Enter an integer: 4
-Enter an integer: 10
-Enter an integer: 1450
-Enter an integer: 3200
-Enter an integer: 1031
-List:    10, 10, 10, 10, 10, 4, 10, 1450, 3200, 1031
-sum(A[i] % 10): 5
-sum(A[i] is even):   9</code></pre></figure>
-
-<hr />
-
-<h3 id="exercise-3-implementing-a-transformvalue-function-20-pts">Exercise #3: Implementing a transformValue function [20 pts]</h3>
-
-<p>Like <tt>hw8_ex2.asm</tt>, the program in <tt>hw8_ex3.asm</tt> prompts the user for 10 positive integers
-and prints them (by calling
-<tt>printArray</tt>).  The program then transforms values in the input array
-by calling a <tt>transformValue</tt> function, and prints two modifications
-of the array.</p>
-
-<p><tt>transformValue</tt> takes 2 arguments:</p>
-
-<ul>
-  <li>an address, say <em>A</em>;</li>
-  <li>a pointer to a subprogram, say <em>f</em> (which takes a single 4-byte argument).</li>
-</ul>
-
-<p><tt>transformValue</tt> calls <em>f</em> passing it the 4-byte value
-at address <em>A</em>, and then replaces the value at that address by
-the value returned by <em>f</em>. 
-In other terms, in C:</p>
-
-<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">transformValue</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="kt">int</span><span class="p">))</span> <span class="p">{</span>
-    <span class="o">*</span><span class="n">A</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">A</span><span class="p">);</span>
-<span class="p">}</span></code></pre></figure>
-
-<p>You must fill in the implementation for <tt>transformValue</tt>
-in file <tt>hw8_functions.asm</tt>.</p>
-
-<p><b>
-You must not modify any other file in the archive.
-</b></p>
-
-<p>The program in <tt>hw8_ex3</tt> defines two functions, <tt>make_negative</tt>
-(which returns -x if its argument is x) and <tt>times_2</tt> (which
-returns 2x if its argument is x). 
-The
-program  passes <tt>make_negative</tt> and <tt>times_2</tt> to <tt>transformValue</tt> to modify some array elements, as seen below:</p>
-
-<figure class="highlight"><pre><code class="language-text" data-lang="text">% ./hw8_ex3
-Enter an integer: 1
-Enter an integer: 2
-Enter an integer: 3
-Enter an integer: 4
-Enter an integer: 3
-Enter an integer: 2
-Enter an integer: 10
-Enter an integer: 1
-Enter an integer: 2
-Enter an integer: 1
-
-Original list: 1, 2, 3, 4, 3, 2, 10, 1, 2, 1
-Made every even index &lt;0: -1, 2, -3, 4, -3, 2, -10, 1, -2, 1
-Made every odd index 2x:  -1, 4, -3, 8, -3, 4, -10, 2, -2, 2
-
-% ./hw8_ex3
-Enter an integer: 4
-Enter an integer: 4
-Enter an integer: 4
-Enter an integer: 4
-Enter an integer: 5
-Enter an integer: 5
-Enter an integer: 5
-Enter an integer: 2
-Enter an integer: 3
-Enter an integer: 1
-
-Original list: 4, 4, 4, 4, 5, 5, 5, 2, 3, 1
-Made every even index &lt;0: -4, 4, -4, 4, -5, 5, -5, 2, -3, 1
-Made every odd index 2x:  -4, 8, -4, 8, -5, 10, -5, 4, -3, 2</code></pre></figure>
-
-<hr />
-
+</div>
 
 </div>
 
@@ -335,11 +141,11 @@ Made every odd index 2x:  -4, 8, -4, 8, -5, 10, -5, 4, -3, 2</code></pre></figur
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-02-01 13:16:30 -1000</span></p>
+        Last update on: <span>2021-02-03 14:14:01 -1000</span></p>
 
       <p style="margin: 0">
         
-        4 modules
+        5 modules
         
         | 11 outcomes
         

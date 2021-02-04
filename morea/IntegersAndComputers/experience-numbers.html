@@ -84,101 +84,48 @@
 
 
 <div class="container">
-  <h2 id="homework-assignment-1-16-pts">Homework Assignment #1 [16 pts]</h2>
+  <script src="/ics312_spring2021/js/Chart.js"></script>
 
-<hr />
+<div class="row">
+  <div class="col-sm-6">
+    <div class="well">
+      <div style="margin-right: auto; margin-left: auto">
+        <canvas id="experiencenumbers"></canvas>
+      </div>
+     </div>
+  </div>
 
-<p>You are expected to do your own work on all homework assignments.  You
-may (and are encouraged to) engage in <i>general</i> discussions with
-your classmates regarding the assignments, but specific details of a
-solution, including the solution itself, must always be your
-own work. (See the statement of Academic Dishonesty on the 
-<a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a>.)</p>
+  <div class="col-sm-6">
+    
 
-<h4 id="how-to-turn-in">How to turn in?</h4>
+  </div>
 
-<p>Assignments need to be turned in via <a href="https://laulima.hawaii.edu/portal">Laulima</a>. Check the <a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a> for the late assignment policy for the course.</p>
+  <script>
 
-<h4 id="what-to-turn-in">What to turn in?</h4>
+    var moreaChartData = {
+      labels: ,
+      datasets: [ { data:  } ]
+    };
 
-<p>You should turn in a single <b>plain text or PDF</b> file named <tt>README.txt</tt> or <tt>README.pdf</tt>
-with your answers to the assignment’s questions.</p>
+    var moreaChartOptions = {
+      scaleGridLineColor: "gray",
+      scaleFontColor: "darkgray",
+      scaleLineColor: "darkgray",
+      responsive: true,
+      animation: false
+    };
 
-<hr />
+    // Get the context of the canvas element we want to select
+    var ctx = document.getElementById("experiencenumbers").getContext("2d");
+    var myNewChart = new Chart(ctx).Bar(moreaChartData, moreaChartOptions);
 
-<p>For many of these questions you can check your results using on-line
-converters. This is fine as long as you went through the exercises by hand
-and show the corresponding work. You have to be able to do some of these
-things relatively quickly in your head for future assignments, exams, and
-in your future careers.</p>
+  </script>
 
-<hr />
 
-<h3 id="exercise-1-conversions-6pts">Exercise #1: Conversions [6pts]</h3>
 
-<p>For all the following, perform the  conversions <b>showing your work</b>
-using the systematic methods described in the lecture notes.</p>
 
-<ol>
-  <li>hex 4F25 into binary</li>
-  <li>hex 81A into decimal</li>
-  <li>binary 1101011100110 into hex</li>
-  <li>binary 0101110 into decimal</li>
-  <li>decimal 149 into binary</li>
-  <li>decimal 417 into hex</li>
-</ol>
 
-<hr />
-
-<h3 id="exercise-2-binary-and-hex-arithmetic-2pts">Exercise #2: Binary and Hex Arithmetic [2pts]</h3>
-
-<p>Give the result for each of the operations below. <b>Show your work (showing carries)</b>.</p>
-
-<ol>
-  <li>binary: 110100 + 10110111</li>
-  <li>hex: 82D11FFA + 5821DB22</li>
-</ol>
-
-<hr />
-
-<h3 id="exercise-3-twos-complement-3pts">Exercise #3: Two’s Complement [3pts]</h3>
-
-<p>Give the <b>binary</b> <b>16-bit</b> two’s complement representation of the following decimal integers, and
-<b>show the details of your work</b>:</p>
-
-<ol>
-  <li>159</li>
-  <li>-2</li>
-  <li>-51</li>
-</ol>
-
-<hr />
-
-<h3 id="exercise-4-twos-complement-3pts">Exercise #4: Two’s Complement [3pts]</h3>
-
-<p>Give the <b>hexadecimal</b> <b>32-bit</b> two’s complement representation of the
-following decimal integers, and <b>show the details of your work</b>:</p>
-
-<ol>
-  <li>-9</li>
-  <li>-169</li>
-  <li>373</li>
-</ol>
-
-<hr />
-
-<h3 id="exercise-5-twos-complement-2pts">Exercise #5: Two’s Complement [2pts]</h3>
-
-<p>Give the <b>decimal value</b> of the following <b>12-bit</b> two’s complement <b>hexadecimal</b>
-representations, and <b>show the details of your work</b>:</p>
-
-<ol>
-  <li>C27</li>
-  <li>7F3</li>
-</ol>
-
-<hr />
-
+</div>
 
 </div>
 
@@ -194,11 +141,11 @@ representations, and <b>show the details of your work</b>:</p>
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-02-01 13:16:30 -1000</span></p>
+        Last update on: <span>2021-02-03 14:14:01 -1000</span></p>
 
       <p style="margin: 0">
         
-        4 modules
+        5 modules
         
         | 11 outcomes
         

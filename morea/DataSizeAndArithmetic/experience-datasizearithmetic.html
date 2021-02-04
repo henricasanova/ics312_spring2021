@@ -84,51 +84,48 @@
 
 
 <div class="container">
-  <h2 id="homework-assignment-4-40-pts">Homework Assignment #4 [40 pts]</h2>
+  <script src="/ics312_spring2021/js/Chart.js"></script>
 
-<hr />
+<div class="row">
+  <div class="col-sm-6">
+    <div class="well">
+      <div style="margin-right: auto; margin-left: auto">
+        <canvas id="experiencedatasizearithmetic"></canvas>
+      </div>
+     </div>
+  </div>
 
-<p>You are expected to do your own work on all homework assignments.  You
-may (and are encouraged to) engage in <em>general</em> discussions with
-your classmates regarding the assignments, but specific details of a
-solution, including the solution itself, must always be your
-own work. (See the statement of Academic Dishonesty on the 
-<a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a>.)</p>
+  <div class="col-sm-6">
+    
 
-<h4 id="how-to-turn-in">How to turn in?</h4>
+  </div>
 
-<p>Assignments need to be turned in via <a href="https://laulima.hawaii.edu/portal">Laulima</a>. Check the <a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a> for the late assignment policy for the course.</p>
+  <script>
 
-<h4 id="what-to-turn-in">What to turn in?</h4>
+    var moreaChartData = {
+      labels: ,
+      datasets: [ { data:  } ]
+    };
 
-<p>You should turn in a single <b>plain text or PDF</b> file named <tt>README.txt</tt> or <tt>README.pdf</tt>
-with your answers to the assignment’s questions.</p>
+    var moreaChartOptions = {
+      scaleGridLineColor: "gray",
+      scaleFontColor: "darkgray",
+      scaleLineColor: "darkgray",
+      responsive: true,
+      animation: false
+    };
 
-<hr />
+    // Get the context of the canvas element we want to select
+    var ctx = document.getElementById("experiencedatasizearithmetic").getContext("2d");
+    var myNewChart = new Chart(ctx).Bar(moreaChartData, moreaChartOptions);
 
-<h3 id="exercise-1-overflow-40-pts">Exercise #1: Overflow [40 pts]</h3>
+  </script>
 
-<p>For each of the following hex additions:</p>
 
-<ul>
-  <li><strong>2-byte</strong> quantities: 8FE0 + B036</li>
-  <li><strong>2-byte</strong> quantities: E5 + 0E</li>
-  <li><strong>1-byte</strong> quantities: 5243 + 7DBC</li>
-  <li><strong>1-byte</strong> quantities: E5 + 3A</li>
-</ul>
 
-<p>Answer these 3 questions:</p>
 
-<ul>
-  <li>say whether the carry bit is set;</li>
-  <li>say whether the overflow bit is set <strong>and</strong> explain your reasoning;</li>
-  <li>say what would be printed by <tt>print_int</tt> if the result were
-<em>sign-extended</em> into the EAX register (Remember that this macro prints
-<strong>signed</strong> numbers in decimal representation).</li>
-</ul>
 
-<hr />
-
+</div>
 
 </div>
 
@@ -144,11 +141,11 @@ with your answers to the assignment’s questions.</p>
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-02-01 13:16:30 -1000</span></p>
+        Last update on: <span>2021-02-03 14:14:01 -1000</span></p>
 
       <p style="margin: 0">
         
-        4 modules
+        5 modules
         
         | 11 outcomes
         
