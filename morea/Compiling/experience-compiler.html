@@ -84,48 +84,290 @@
 
 
 <div class="container">
-  <script src="/ics312_spring2021/js/Chart.js"></script>
+  <h2 id="homework-assignment-9-40-pts">Homework Assignment #9 [40 pts]</h2>
 
-<div class="row">
-  <div class="col-sm-6">
-    <div class="well">
-      <div style="margin-right: auto; margin-left: auto">
-        <canvas id="experiencecompiler"></canvas>
-      </div>
-     </div>
-  </div>
+<hr />
 
-  <div class="col-sm-6">
-    
+<p>You are expected to do your own work on all homework assignments.  You
+may (and are encouraged to) engage in <i>general</i> discussions with
+your classmates regarding the assignments, but specific details of a
+solution, including the solution itself, must always be your
+own work. (See the statement of Academic Dishonesty on the 
+<a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a>.)</p>
 
-  </div>
+<h4 id="how-to-turn-in">How to turn in?</h4>
 
-  <script>
+<p>Assignments need to be turned in via <a href="https://laulima.hawaii.edu/portal">Laulima</a>. Check the <a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a> for the late assignment policy for the course.</p>
 
-    var moreaChartData = {
-      labels: ,
-      datasets: [ { data:  } ]
-    };
+<h4 id="what-to-turn-in">What to turn in?</h4>
 
-    var moreaChartOptions = {
-      scaleGridLineColor: "gray",
-      scaleFontColor: "darkgray",
-      scaleLineColor: "darkgray",
-      responsive: true,
-      animation: false
-    };
+<p>You must turn in one .g4 file called <b><tt>MyLanguageV1Code.g4</tt></b>
+that implements your compiler.</p>
 
-    // Get the context of the canvas element we want to select
-    var ctx = document.getElementById("experiencecompiler").getContext("2d");
-    var myNewChart = new Chart(ctx).Bar(moreaChartData, moreaChartOptions);
+<hr />
 
-  </script>
+<h4 id="download-starter-g4-file">Download starter .g4 file</h4>
 
+<p>Download the <tt>MyLanguageV0Code.g4</tt> file available
+<a href="./MyLanguageV0Code.g4">here</a>, and rename
+it as <tt>MyLanguageV1Code.g4</tt>.  <strong>Replace V0 by V1 inside that file</strong> (line 3).</p>
 
+<p>Each question in the assignment asks you to implement a feature of the
+language but you turn in a single file that implements all the features you
+were able to implement, <strong>in sequence</strong>.</p>
 
+<hr />
 
+<h4 id="question-1-adding-a--instruction-10-pts">Question #1: Adding a ‘&lt;&lt;’ instruction [10 pts]</h4>
 
-</div>
+<p>Augment the language so that it has a &lt;&lt; (left shift) instruction that has two operands. 
+The first operand is a variable, the value of which is modified by a left shift operation.
+The second operand is an integer that is the number bits to shift by.</p>
+
+<p>For instance, the following program:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+a = 3;
+
+a &lt;&lt; 1;
+print a;
+a &lt;&lt; 1;
+print a;</code></pre></figure>
+
+<p>should print:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">6
+12</code></pre></figure>
+
+<p>And this program:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int x;
+int y;
+int z;
+
+x = 3;
+y = 2;
+z = x + y;
+
+z &lt;&lt; 10;
+
+x &lt;&lt; 2;
+z = z + x;
+
+print z;</code></pre></figure>
+
+<p>should print:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">5132</code></pre></figure>
+
+<hr />
+
+<h4 id="question-2-adding-a-not-equal-option-for-the-if-statement-5-pts">Question #2: Adding a not-equal option for the if statement [5 pts]</h4>
+
+<p>Augment the language so that the condition in an if statement can be a “not equal” test.</p>
+
+<p>For instance, the following program:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+int b;
+b = 0;
+a = 3;
+if (a != 4)
+  b = 5;
+  b &lt;&lt; 1;
+endif
+print a;
+print b;</code></pre></figure>
+
+<p>should print:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">3
+10</code></pre></figure>
+
+<p>And this following program:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+int b;
+int c;
+a = 1;
+b = 2;
+c = 0;
+if (b != 1)
+  c = 11;
+  if (a != 1)
+    c = 22;
+  endif
+endif
+print c;</code></pre></figure>
+
+<p>should print:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">11</code></pre></figure>
+
+<hr />
+
+<h4 id="question-3-adding-a-for-loop-15-pts">Question #3: Adding a for loop [15 pts]</h4>
+
+<p>Augment the language with a simple for loop that has a single loop variable,
+that is always incremented by 1 and goes from some minimum number to some maximum
+number (inclusive).  The basic syntax is:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">for variable = min, max
+  ...
+endfor</code></pre></figure>
+
+<p>which means:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">variable = min
+for:
+  if (variable &gt; max) goto endfor
+    ...
+    variable++
+    goto for
+endfor:</code></pre></figure>
+
+<p>For instance, the following program:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+  
+for a = 1 , 5
+  print a;
+  a = a + 1;
+endfor</code></pre></figure>
+
+<p>should print:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">1
+3
+5</code></pre></figure>
+
+<p>And the following program:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+int b;
+
+b = 0;
+for a = 1 , 5
+  b = b + a;
+  if (b != 2)
+    if (b != 3)
+      print a;
+    endif
+  endif
+endfor
+
+print a;
+print b;
+
+for a = 100 , 1
+  b = b + a;
+endfor
+
+print a;
+print b;</code></pre></figure>
+
+<p>should print:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">11
+55
+100
+55</code></pre></figure>
+
+<hr />
+
+<h4 id="question-4-adding-very-basic-subprogram-capabilities-10-pts">Question #4: Adding (very basic) subprogram capabilities [10 pts]</h4>
+
+<p>Add the ability to have subprogram declarations and invocations. These subprograms
+take no parameters and return nothing. Subprogram declarations must be at the end of
+the program.</p>
+
+<p>For instance, this program:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+int b;
+
+a = 12;
+f();
+f();
+print b;
+
+void f() {
+    b = a + 1;
+}</code></pre></figure>
+
+<p>should print:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">13</code></pre></figure>
+
+<p>And this (recursive) program:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+int b;
+
+a = 2;
+b = 4;
+f();
+print a;
+print b;
+
+void f() {
+  g();
+  if (b != 16)
+    f();
+  endif
+}
+
+void g() {
+  a = a + 1;
+  b = b + a;
+}</code></pre></figure>
+
+<p>should print:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">5
+16</code></pre></figure>
+
+<hr />
+
+<h4 id="question-5-adding-a-better-print-statement-extra-credit-10-pts">Question #5: Adding a better print statement [EXTRA CREDIT: 10 pts]</h4>
+
+<p>Augment our language so that print statements can prints <b>any number
+of</b> values, separated by white spaces (it’s ok to have a trailing white space).</p>
+
+<p>For instance, this program:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+int b;
+int c;
+
+a = 12;
+b = 13;
+c = 14;
+print a, b, c;
+print b,c,a;</code></pre></figure>
+
+<p>should print:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">12 13 14
+13 14 12</code></pre></figure>
+
+<p>and this program:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+int v;
+
+a = 12;
+v = 33 + a;
+print a,v;
+print a,a,a,a;</code></pre></figure>
+
+<p>should print:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">12 45
+12 12 12 12</code></pre></figure>
+
+<hr />
+
 
 </div>
 
@@ -141,7 +383,7 @@
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-02-04 16:26:50 -1000</span></p>
+        Last update on: <span>2021-02-04 16:39:04 -1000</span></p>
 
       <p style="margin: 0">
         

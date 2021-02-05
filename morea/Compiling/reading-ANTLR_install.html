@@ -84,48 +84,86 @@
 
 
 <div class="container">
-  <script src="/ics312_spring2021/js/Chart.js"></script>
+  <h2 id="installing-antlr">Installing ANTLR</h2>
 
-<div class="row">
-  <div class="col-sm-6">
-    <div class="well">
-      <div style="margin-right: auto; margin-left: auto">
-        <canvas id="readinginstallingANTLR"></canvas>
-      </div>
-     </div>
-  </div>
+<p>You need to have Java installed on your system (e.g., in Ubuntu: <tt>sudo apt install openjdk-11-jdk</tt>).</p>
 
-  <div class="col-sm-6">
-    
+<ul>
+  <li>
+    <p>Download <a href="http://www.antlr.org/download/antlr-4.8-complete.jar">antlr-4.8-complete.jar</a> from the <a href="http://www.antlr.org">ANTLR Web site</a>, to the directory in your local machine in which you’ll use ANTLR to develop your compiler (i.e., so that Java will “see” this .jar file).</p>
+  </li>
+  <li>
+    <p>ANTLR takes an input file that describes the language to be
+lexed/parsed, and generates a set of .java files that can then be
+compiled with javac.  The resulting .class files can then be executed to lex/parse
+source code written in the language.</p>
+  </li>
+</ul>
 
-  </div>
+<h2 id="example-run-of-antlr">Example run of ANTLR</h2>
 
-  <script>
+<p>Let us go through an example step by step. We assume a UNIX-like
+command-line and that the file antlr-4.8-complete.jar  is located in directory
+  <tt>~/ANTLR/</tt>.  Everything below assumes that <tt>~/ANTLR</tt> is the
+working directory (no <tt>CLASSPATH</tt> variable is set, and only minimal
+<tt>-cp</tt> options are passed to <tt>javac</tt> and <tt>java</tt>).</p>
 
-    var moreaChartData = {
-      labels: ,
-      datasets: [ { data:  } ]
-    };
+<p>In the working directory we have three files:</p>
 
-    var moreaChartOptions = {
-      scaleGridLineColor: "gray",
-      scaleFontColor: "darkgray",
-      scaleLineColor: "darkgray",
-      responsive: true,
-      animation: false
-    };
+<figure class="highlight"><pre><code class="language-text" data-lang="text">% ls 
+antlr-4.8-complete.jar
+SimpleExample.g4  
+helloworld.greeting</code></pre></figure>
 
-    // Get the context of the canvas element we want to select
-    var ctx = document.getElementById("readinginstallingANTLR").getContext("2d");
-    var myNewChart = new Chart(ctx).Bar(moreaChartData, moreaChartOptions);
+<p>The first file is the ANTLR jar file. 
+The second file, <a href="SimpleExample.g4">SimpleExample.g4</a>, written in ANTLR syntax that we will understand later,
+describes the language to be lexed/parsed, in this case a trivial language
+that describes a greeting of the form “Hello name!”:</p>
 
-  </script>
+<figure class="highlight"><pre><code class="language-text" data-lang="text">grammar SimpleExample;
 
+greeting: Hello Name Bang ;
 
+// TOKENS
+Hello:	'Hello' ;
+Bang:	'!' ;
+Name:   [A-Z][a-z]* ;
 
+WS : [ \t\r\n]+ -&gt; skip ; // skip spaces, tabs, newlines</code></pre></figure>
 
+<p>There is some “parsing” stuff in the file above (like the “grammar” statement”), because in ANTLR we can’t just generate a lexer without also a parser. But for the lexer, what
+we care about for now is just what’s bellow the “// TOKENS” comment.</p>
 
-</div>
+<p>The third file is “source code” written using the above language</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">Hello World !</code></pre></figure>
+
+<p>We can now run ANTLR to generate the code of our lexer/parser by typing the following command:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">% java -jar ./antlr-4.8-complete.jar SimpleExample.g4</code></pre></figure>
+
+<p>The above command produces a bunch of files, including .java files. These
+java files we can now compile with:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">% javac -cp antlr-4.8-complete.jar SimpleExample*.java</code></pre></figure>
+
+<p>We can now finally run our lexer/parser on the source code (don’t forget the “.:” in the classpath!)</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">% java -cp .:antlr-4.8-complete.jar org.antlr.v4.gui.TestRig SimpleExample greeting helloworld.greeting -tokens
+[@0,0:4='Hello',&lt;1&gt;,1:0]
+[@1,6:10='World',&lt;3&gt;,1:6]
+[@2,12:12='!',&lt;2&gt;,1:12]
+[@3,14:13='&lt;EOF&gt;',&lt;-1&gt;,2:0]
+(greeting Hello World !)</code></pre></figure>
+
+<p>In the above we asked ANTLR to print the set of tokens. We’ll do much more, but you can already try to
+modify helloworld.greeting and create lexing errors! For instance, if you add a ‘+’ at the end of the line,
+you should get some “token recognition error”.</p>
+
+<p>Even if you don’t quite understand the above, make sure you can get it to work as described.</p>
+
+<hr />
+
 
 </div>
 
@@ -141,7 +179,7 @@
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-02-04 16:26:50 -1000</span></p>
+        Last update on: <span>2021-02-04 16:39:04 -1000</span></p>
 
       <p style="margin: 0">
         

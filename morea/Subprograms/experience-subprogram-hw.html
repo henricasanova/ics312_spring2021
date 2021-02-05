@@ -84,48 +84,143 @@
 
 
 <div class="container">
-  <script src="/ics312_spring2021/js/Chart.js"></script>
+  <h2 id="homework-assignment-7-60-pts">Homework Assignment #7 [60 pts]</h2>
 
-<div class="row">
-  <div class="col-sm-6">
-    <div class="well">
-      <div style="margin-right: auto; margin-left: auto">
-        <canvas id="experiencesubprogramshw"></canvas>
-      </div>
-     </div>
-  </div>
+<hr />
 
-  <div class="col-sm-6">
-    
+<p>You are expected to do your own work on all homework assignments.  You
+may (and are encouraged to) engage in <i>general</i> discussions with
+your classmates regarding the assignments, but specific details of a
+solution, including the solution itself, must always be your
+own work. (See the statement of Academic Dishonesty on the
+<a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a>.)</p>
 
-  </div>
+<h4 id="how-to-turn-in">How to turn in?</h4>
 
-  <script>
+<p>Assignments need to be turned in via <a href="https://laulima.hawaii.edu/portal">Laulima</a>. Check the <a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a> for the late assignment policy for the course.</p>
 
-    var moreaChartData = {
-      labels: ,
-      datasets: [ { data:  } ]
-    };
+<h4 id="what-to-turn-in">What to turn in?</h4>
 
-    var moreaChartOptions = {
-      scaleGridLineColor: "gray",
-      scaleFontColor: "darkgray",
-      scaleLineColor: "darkgray",
-      responsive: true,
-      animation: false
-    };
+<p>You should turn in a single <b>plain text or PDF</b> file named <tt>README.txt</tt> or <tt>README.pdf</tt>
+with your answers to the assignment’s questions.</p>
 
-    // Get the context of the canvas element we want to select
-    var ctx = document.getElementById("experiencesubprogramshw").getContext("2d");
-    var myNewChart = new Chart(ctx).Bar(moreaChartData, moreaChartOptions);
+<hr />
 
-  </script>
+<h3 id="exercise-1-draw-a-stack-10pts">Exercise #1: “Draw” a stack [10pts]</h3>
 
+<p>Consider the following C code fragment:</p>
 
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="p">...</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">...</span></code></pre></figure>
 
+<p>and the following two C function definitions:</p>
 
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">;</span>
+    <span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+<span class="p">}</span>
 
-</div>
+<span class="n">g</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">z</span><span class="p">;</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">;</span>
+    <span class="c1">// HERE</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Draw a picture of the stack at the point where the program reaches the
+comment “// HERE”.  You don’t have to show any stack content pushed before
+the arguments to f().</p>
+
+<p>Be as complete as possible, indicating values on the stack if known (e.g.,
+“12”) or, if unknown, the name of the parameter/variable (e.g., “x = ?”).
+When indicating return addresses on the stack, whenever possible include
+the function returned to (e.g., “Return @ to f” as opposed to “Return @”).
+Assume that only the EBP register is saved by all the functions, and that
+the C calling convention is respected.  Assume that local variables
+are stored on the stack in the order in which they appear in the code (not
+in reverse order).  Finally, show the stack as growing “downwards”, as done
+in class.</p>
+
+<p><i>Hint:</i> There should be 10 elements on the stack.</p>
+
+<p>Here is an example to give you
+an idea of what’s expected, but which doesn’t make much sense:</p>
+
+<center>
+<table border="1">
+	<tr><td align="center">a = 12</td></tr>
+	<tr><td align="center">x = ?</td></tr>
+	<tr><td align="center">Saved EBP</td></tr>
+	<tr><td align="center">b = 4</td></tr>
+	<tr><td align="center">Return @ to h</td></tr>
+	<tr><td align="center">y = 12	</td></tr>
+	<tr><td align="center">Saved EBP</td></tr>
+	<tr><td align="center">p = ?</td></tr>
+	<tr><td align="center">z = 42</td></tr>
+	<tr><td align="center">Return @ to foo	</td></tr>
+</table>
+</center>
+
+<hr />
+
+<h3 id="exercise-2-draw-another-stack-30pts">Exercise #2: “Draw” another stack [30pts]</h3>
+
+<p>Consider the following C code fragment:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="p">...</span>
+<span class="n">g</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">...</span></code></pre></figure>
+
+<p>and the following C function definitions:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">g</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">offset</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">z</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// HERE</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">z</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">offset</span><span class="p">);</span>
+    <span class="n">z</span> <span class="o">*=</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="n">offset</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">z</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Same question as for Exercise #1.</p>
+
+<p><i>Hint:</i> There should be 15 elements on the stack.</p>
+
+<hr />
+
+<h3 id="exercise-3-reverse-engineering-20pts">Exercise #3: Reverse-engineering [20pts]</h3>
+
+<p>Write a C translation of the NASM program below, sticking to the
+assembly code as much as possible. Use single-letter variable names
+for function parameters (e.g., <tt>int foo(int x, int y)</tt>) and for
+local variables within function (e.g., <tt>int z</tt>) instead of
+using x86 register names (in fact registers should never appear in your
+translation).   It is expected that your C code is much shorter
+than the assembly code.</p>
+
+<p>Here are requirements for your C program (in addition to it being a correct translation):</p>
+
+<ul>
+  <li>Your C program must declare <b>exactly</b> the same number of global variables as the assembly program</li>
+  <li>Your C program must declare <b>exactly</b> the same number of local variables as the assembly program</li>
+  <li>Function <tt>asm_main</tt> in assembly must be called <tt>main</tt> in your C program (and must return 0)</li>
+  <li>Function <tt>f</tt> in assembly must also be called <tt>f</tt> in your C program (and must always return an integer)</li>
+  <li>Your C program must have <b>exactly</b> the same number of calls to function <tt>f</tt> as the assembly program</li>
+</ul>
+
+<p><i>Hint:</i> This program outputs the number -217 (but it is <b>not</b>
+necessary to know this to do the translation).</p>
+
+<center>
+<img width="400" src="./hw7_program.jpg" />
+</center>
+
+<p><br /></p>
+
 
 </div>
 
@@ -141,7 +236,7 @@
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-02-04 16:26:50 -1000</span></p>
+        Last update on: <span>2021-02-04 16:39:04 -1000</span></p>
 
       <p style="margin: 0">
         

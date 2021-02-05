@@ -84,48 +84,169 @@
 
 
 <div class="container">
-  <script src="/ics312_spring2021/js/Chart.js"></script>
+  <h2 id="a-simple-antlr-parser">A Simple ANTLR Parser</h2>
 
-<div class="row">
-  <div class="col-sm-6">
-    <div class="well">
-      <div style="margin-right: auto; margin-left: auto">
-        <canvas id="readingANTLRparser"></canvas>
-      </div>
-     </div>
-  </div>
+<p>Here is the grammar of the language in the lecture notes, as we 
+have developed it in class or close
+(you can download the file <a href="./MyLanguageV0NoCode.g4">here</a>):</p>
 
-  <div class="col-sm-6">
-    
+<figure class="highlight"><pre><code class="language-text" data-lang="text">// A simple syntax-directed translator for a simple language
 
-  </div>
+grammar MyLanguageV0NoCode;
 
-  <script>
+// Root non-terminal symbol
+// A program is a bunch of declarations followed by a bunch of statements
+// The Java code outputs the necessary NASM code around these declarations
 
-    var moreaChartData = {
-      labels: ,
-      datasets: [ { data:  } ]
-    };
+program       : 
+              declaration*
+              statement*
+              ;
 
-    var moreaChartOptions = {
-      scaleGridLineColor: "gray",
-      scaleFontColor: "darkgray",
-      scaleLineColor: "darkgray",
-      responsive: true,
-      animation: false
-    };
+// Parse rule for variable declarations
 
-    // Get the context of the canvas element we want to select
-    var ctx = document.getElementById("readingANTLRparser").getContext("2d");
-    var myNewChart = new Chart(ctx).Bar(moreaChartData, moreaChartOptions);
+declaration   : 
+              INT NAME SEMICOLON
+              ;
 
-  </script>
+// Parse rule for statements
+
+statement      : 
+               ifstmt 
+             | printstmt 
+             | assignstmt 
+               ;
+
+// Parse rule for if statements
+
+ifstmt      : 
+            IF LPAREN identifier EQUAL integer RPAREN
+            statement*
+            ENDIF
+            ;
 
 
+// Parse rule for print statements
+
+printstmt      : 
+               PRINT term SEMICOLON 
+               ;
+
+// Parse rule for assignment statements
+
+assignstmt      : 
+                NAME ASSIGN expression SEMICOLON 
+                ;
+
+// Parse rule for expressions
+
+expression      : 
+                term
+              | 
+                term PLUS term 
+                ;
+
+// Parse rule for terms
+
+term          : 
+              identifier
+            | integer 
+              ;
+
+// Parse rule for identifiers
+
+identifier   : NAME  ;
+
+// Parse rule for numbers 
+
+integer      : INTEGER  ;
 
 
+// Reserved Keywords
+////////////////////////////////
 
-</div>
+IF: 'if';
+ENDIF: 'endif';
+PRINT: 'print';
+INT: 'int';
+
+// Operators
+PLUS: '+';
+EQUAL: '==';
+ASSIGN: '=';
+NOTEQUAL: '!=';
+
+// Semicolon and parentheses
+SEMICOLON: ';';
+LPAREN: '(';
+RPAREN: ')';
+
+// Integers
+INTEGER: [0-9][0-9]*;
+
+// Variable names
+NAME: [a-z]+;   
+
+// Ignore all white spaces 
+WS: [ \t\r\n]+ -&gt; skip ; </code></pre></figure>
+
+<p>Let us try to run ANTLR on a source file named sourcecode.txt with content:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+int b;
+a = 3;
+b = a + 1;
+if (b == 4) a = 2; endif
+if (a == 3)  
+    a = a + 1; 
+    b = b + 6;
+endif 
+print a;
+print b;</code></pre></figure>
+
+<p>Let us now run ANTLR and out parser:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">% java -jar ./antlr-4.8-complete.jar MyLanguageV0NoCode.g4
+
+% javac -cp .:antlr-4.8-complete.jar MyLanguageV0NoCode*.java
+
+% java -cp .:antlr-4.8-complete.jar org.antlr.v4.gui.TestRig MyLanguageV0NoCode program sourcecode.txt -gui</code></pre></figure>
+
+<p>The <tt>-gui</tt> option outputs the parse tree graphically (clickable large image):</p>
+
+<p><a href="./antlr4_parse_tree.png"><img src="./antlr4_parse_tree_thumbnail.png" alt="Foo" /></a></p>
+
+<p>If the program has a syntax error, our parser will detect it.
+For instance, for the source code:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+int b;
+b = a * 1;</code></pre></figure>
+
+<p>we get this output:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">% java -cp .:antlr-4.8-complete.jar org.antlr.v4.gui.TestRig MyLanguageV0NoCode program sourcecode.txt  
+line 3:6 token recognition error at: '*'
+line 3:8 extraneous input '1' expecting ';'</code></pre></figure>
+
+<p>Note that our program <b>only</b> checks grammatical correctness. For instance,
+the program below should likely be incorrect due to undeclared variables:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int var;
+var = foo + 1;</code></pre></figure>
+
+<p>And yet, our parser happily parses it:</p>
+
+<center>
+<img src="./small_antlr4_parse_tree.png" />
+</center>
+
+<p>This is because the notion of variable declaration is really about
+<i>semantics</i>, not about <i>syntax</i>, something we will discuss a bit
+in class.</p>
+
+<hr />
+
 
 </div>
 
@@ -141,7 +262,7 @@
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-02-04 16:26:50 -1000</span></p>
+        Last update on: <span>2021-02-04 16:39:04 -1000</span></p>
 
       <p style="margin: 0">
         

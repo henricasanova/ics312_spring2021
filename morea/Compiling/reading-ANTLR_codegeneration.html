@@ -84,48 +84,230 @@
 
 
 <div class="container">
-  <script src="/ics312_spring2021/js/Chart.js"></script>
+  <h2 id="a-simple-antlr-compiler">A Simple ANTLR Compiler</h2>
 
-<div class="row">
-  <div class="col-sm-6">
-    <div class="well">
-      <div style="margin-right: auto; margin-left: auto">
-        <canvas id="readingANTLRcodegeneration"></canvas>
-      </div>
-     </div>
-  </div>
+<p>Here is the compiler we developed in class 
+have developed it in class or close
+(you can download the file <a href="./MyLanguageV0Code.g4">here</a>):</p>
 
-  <div class="col-sm-6">
-    
+<figure class="highlight"><pre><code class="language-text" data-lang="text">// A simple syntax-directed translator for a simple language
 
-  </div>
+grammar MyLanguageV0Code;
 
-  <script>
+// Root non-terminal symbol
+// A program is a bunch of declarations followed by a bunch of statements
+// The Java code outputs the necessary NASM code around these declarations
 
-    var moreaChartData = {
-      labels: ,
-      datasets: [ { data:  } ]
-    };
+program       : 
+              {System.out.println("%include \"asm_io.inc\"");
+               System.out.println("segment .bss"); }
+              declaration*
+              {System.out.println("segment .text"); 
+               System.out.println("\tglobal asm_main"); 
+               System.out.println("asm_main:"); 
+               System.out.println("\tenter 0,0"); 
+               System.out.println("\tpusha"); }
+              statement*
+              {System.out.println("\tpopa"); 
+               System.out.println("\tmov eax,0"); 
+               System.out.println("\tleave"); 
+               System.out.println("\tret"); } 
+              ;
 
-    var moreaChartOptions = {
-      scaleGridLineColor: "gray",
-      scaleFontColor: "darkgray",
-      scaleLineColor: "darkgray",
-      responsive: true,
-      animation: false
-    };
+// Parse rule for variable declarations
 
-    // Get the context of the canvas element we want to select
-    var ctx = document.getElementById("readingANTLRcodegeneration").getContext("2d");
-    var myNewChart = new Chart(ctx).Bar(moreaChartData, moreaChartOptions);
+declaration   : 
+              {int a; }
+              INT a=NAME SEMICOLON
+              {System.out.println("\t"+$a.text + "  resd 1");}
+              ;
 
-  </script>
+// Parse rule for statements
+
+statement      : 
+               ifstmt 
+             | printstmt 
+             | assignstmt 
+               ;
+
+// Parse rule for if statements
+
+ifstmt      : 
+            {int a,b;} 
+            {String label;}
+            IF LPAREN a=identifier EQUAL b=integer RPAREN
+            {System.out.println("\tcmp dword "+$a.toString+","+$b.toString);
+             label = "label_"+Integer.toString($IF.index);
+             System.out.println("\tjnz "+label); }
+            statement*
+            { System.out.println(label+":"); }
+            ENDIF
+            ;
 
 
+// Parse rule for print statements
+
+printstmt      : 
+               PRINT term SEMICOLON 
+               {System.out.println("\tmov eax, "+$term.toString);
+                System.out.println("\tcall print_int");
+                System.out.println("\tcall print_nl");} 
+               ;
+
+// Parse rule for assignment statements
+
+assignstmt      : 
+                {int a; }
+                a=NAME ASSIGN expression SEMICOLON 
+                {System.out.println("\tmov ["+$a.text+"], eax");} 
+                ;
+
+// Parse rule for expressions
+
+expression      : 
+                {int a,b; }
+                a=term 
+                {System.out.println("\tmov eax,"+$a.toString);}
+              | 
+                a=term PLUS b=term 
+                {System.out.println("\tmov eax,"+$a.toString);}
+                {System.out.println("\tadd eax,"+$b.toString);}
+                ;
+
+// Parse rule for terms
+
+term returns [String toString]  : 
+                                identifier {$toString = $identifier.toString;} 
+                              | integer {$toString = $integer.toString;} 
+                                ;
+
+// Parse rule for identifiers
+
+identifier returns [String toString]: NAME {$toString = "["+$NAME.text+"]";} ;
+
+// Parse rule for numbers 
+
+integer returns [String toString]: INTEGER {$toString = $INTEGER.text;} ;
 
 
+// Reserved Keywords
+////////////////////////////////
 
-</div>
+IF: 'if';
+ENDIF: 'endif';
+PRINT: 'print';
+INT: 'int';
+
+// Operators
+PLUS: '+';
+EQUAL: '==';
+ASSIGN: '=';
+NOTEQUAL: '!=';
+
+// Semicolon and parentheses
+SEMICOLON: ';';
+LPAREN: '(';
+RPAREN: ')';
+
+// Integers
+INTEGER: [0-9][0-9]*;
+
+// Variable names
+NAME: [a-z]+;   
+
+// Ignore all white spaces 
+WS: [ \t\r\n]+ -&gt; skip ; </code></pre></figure>
+
+<p>Let us try to run ANTLR on a source file named sourcecode.txt with content:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">int a;
+int b;
+a = 3;
+b = a + 1;
+if (b == 4) a = 2; endif
+if (a == 3)  
+    a = a + 1; 
+    b = b + 6;
+endif 
+print a;
+print b;</code></pre></figure>
+
+<p>Let us now run ANTLR and out parser:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">% java -jar ./antlr-4.8-complete.jar MyLanguageV0Code.g4
+
+% javac -cp .:./antlr-4.8-complete.jar MyLanguageV0Code*.java
+
+% java -cp .:./antlr-4.8-complete.jar org.antlr.v4.gui.TestRig MyLanguageV0Code program sourcecode.txt</code></pre></figure>
+
+<p>The output is:</p>
+
+<figure class="highlight"><pre><code class="language-nasm" data-lang="nasm"><span class="cp">%include "asm_io.inc"
+</span><span class="nf">segment</span> <span class="nv">.data</span>
+	<span class="nf">a</span>  <span class="nv">dd</span> <span class="mi">0</span>
+	<span class="nf">b</span>  <span class="nv">dd</span> <span class="mi">0</span>
+<span class="nf">segment</span> <span class="nv">.text</span>
+	<span class="nf">global</span> <span class="nv">asm_main</span>
+<span class="nl">asm_main:</span>
+	<span class="nf">enter</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+	<span class="nf">pusha</span>
+	<span class="nf">mov</span> <span class="nb">eax</span><span class="p">,</span><span class="mi">3</span>
+	<span class="nf">mov</span> <span class="p">[</span><span class="nv">a</span><span class="p">],</span> <span class="nb">eax</span>
+	<span class="nf">mov</span> <span class="nb">eax</span><span class="p">,[</span><span class="nv">a</span><span class="p">]</span>
+	<span class="nf">add</span> <span class="nb">eax</span><span class="p">,</span><span class="mi">1</span>
+	<span class="nf">mov</span> <span class="p">[</span><span class="nv">b</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nf">cmp</span> <span class="kt">dword</span> <span class="p">[</span><span class="nv">b</span><span class="p">],</span><span class="mi">4</span>
+<span class="nf">jnz</span> <span class="nv">label_16</span>
+	<span class="nf">mov</span> <span class="nb">eax</span><span class="p">,</span><span class="mi">2</span>
+	<span class="nf">mov</span> <span class="p">[</span><span class="nv">a</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">label_16:</span>
+<span class="nf">cmp</span> <span class="kt">dword</span> <span class="p">[</span><span class="nv">a</span><span class="p">],</span><span class="mi">3</span>
+<span class="nf">jnz</span> <span class="nv">label_27</span>
+	<span class="nf">mov</span> <span class="nb">eax</span><span class="p">,[</span><span class="nv">a</span><span class="p">]</span>
+	<span class="nf">add</span> <span class="nb">eax</span><span class="p">,</span><span class="mi">1</span>
+	<span class="nf">mov</span> <span class="p">[</span><span class="nv">a</span><span class="p">],</span> <span class="nb">eax</span>
+	<span class="nf">mov</span> <span class="nb">eax</span><span class="p">,[</span><span class="nv">b</span><span class="p">]</span>
+	<span class="nf">add</span> <span class="nb">eax</span><span class="p">,</span><span class="mi">6</span>
+	<span class="nf">mov</span> <span class="p">[</span><span class="nv">b</span><span class="p">],</span> <span class="nb">eax</span>
+<span class="nl">label_27:</span>
+	<span class="nf">mov</span> <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nv">a</span><span class="p">]</span>
+	<span class="nf">call</span> <span class="nv">print_int</span>
+	<span class="nf">call</span> <span class="nv">print_nl</span>
+	<span class="nf">mov</span> <span class="nb">eax</span><span class="p">,</span> <span class="p">[</span><span class="nv">b</span><span class="p">]</span>
+	<span class="nf">call</span> <span class="nv">print_int</span>
+	<span class="nf">call</span> <span class="nv">print_nl</span>
+	<span class="nf">popa</span>
+	<span class="nf">mov</span> <span class="nb">eax</span><span class="p">,</span><span class="mi">0</span>
+	<span class="nf">leave</span>
+	<span class="nf">ret</span></code></pre></figure>
+
+<p>You can now run this code using NASM, and check that it works! Our
+compiler has MANY weaknesses and is a far cry from a production
+compiler. For instance:</p>
+
+<ul>
+  <li>
+    <p>It doesn’t catch undeclared variables</p>
+  </li>
+  <li>
+    <p>It makes very poor use of the register set</p>
+  </li>
+  <li>
+    <p>It leads to assembly code with wasteful instructions</p>
+  </li>
+</ul>
+
+<p>Addressing the above is very interesting, but would unfortunately
+take us well beyond the scope of this course. Instead, 
+in the programming assignment in this module we will add to the language, and you
+will thus have to extend the compiler.</p>
+
+<h4 id="useful-makefile">Useful Makefile</h4>
+
+<p>You can get this useful Makefile: <a href="./Makefile_ANTLR_x86">Makefile_ANTLR_x86</a> (which you should rename as just “Makefile” if you want to just be able to type “make”</p>
+
+<hr />
+
 
 </div>
 
@@ -141,7 +323,7 @@
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-02-04 16:26:50 -1000</span></p>
+        Last update on: <span>2021-02-04 16:39:04 -1000</span></p>
 
       <p style="margin: 0">
         

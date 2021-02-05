@@ -84,48 +84,122 @@
 
 
 <div class="container">
-  <script src="/ics312_spring2021/js/Chart.js"></script>
+  <h1 id="nasm-how-to">NASM How To</h1>
 
-<div class="row">
-  <div class="col-sm-6">
-    <div class="well">
-      <div style="margin-right: auto; margin-left: auto">
-        <canvas id="readingnasmhowto"></canvas>
-      </div>
-     </div>
-  </div>
+<h3 id="getting-situated">Getting situated</h3>
 
-  <div class="col-sm-6">
-    
+<p>
+The content on this page assumes that you've completed 
+<a href="/ics312_spring2021/morea/GettingStarted/experience-gettingstarted.html">the first (ungraded) assignment</a>. 
+</p>
+<p>
+In what follows we explain how to create and run a simple NASM program, namely
+the <a href="./ics312_first_v1.asm">ics312_first_v1.asm</a> program
+discussed in class.
+</p>
 
-  </div>
+<h3 id="revisiting-the-first-assignment">Revisiting the first assignment</h3>
 
-  <script>
+<p>
+The course's main Web page points to several .asm files that contain simple
+assembly programs used in the lecture notes as examples. 
+In the first assignment you downloaded an archive called 
+<a href="/ics312_spring2021/morea/GettingStarted/nasm_check.tar">nasm_check.tar</a>
+that contained several source files:
+<ul>
+<li> driver.c: A C program that calls our assembly code</li>
+<li> ics312_test.asm: a simple NASM program that prints "It works!"</li>
+<li> asm_io.asm: NASM code that gives us (convenient?) I/O capabilities</li>
+</ul>
+</p>
+<p>
+The sequence of command-line instructions to compile the program were:
+</p>
 
-    var moreaChartData = {
-      labels: ,
-      datasets: [ { data:  } ]
-    };
+<figure class="highlight"><pre><code class="language-text" data-lang="text">nasm -f elf ics312_test.asm -o ics312_test.o
+gcc -m32 -c driver.c -o driver.o
+nasm -f elf -d ELF_TYPE asm_io.asm -o asm_io.o
+gcc -m32 ics312_test.o driver.o asm_io.o -o ics312_test</code></pre></figure>
 
-    var moreaChartOptions = {
-      scaleGridLineColor: "gray",
-      scaleFontColor: "darkgray",
-      scaleLineColor: "darkgray",
-      responsive: true,
-      animation: false
-    };
+<p>
+The first command assembles the ics312_test.asm file into the ics312_test.o object file.
+The second command compiles the C driver into the driver.o object file. 
+The third command assembles the asm_io.asm file into the asm_io.o object file (this is the
+convenient I/O "library" that we talked about in class). 
+The fourth and last command links all the object files into an executable. 
+The program can then be executed by typing "./ics312_test" on the command-line
+</p>
 
-    // Get the context of the canvas element we want to select
-    var ctx = document.getElementById("readingnasmhowto").getContext("2d");
-    var myNewChart = new Chart(ctx).Bar(moreaChartData, moreaChartOptions);
+<p>
+All these steps were automated by a "Makefile", included in the archive.
+You can think of a makefile as an ancestor to today's IDEs (Integrated
+Development Environments). They're still used because they are simple, and
+supported everywhere. They can be created with any text editor (like the small
+one we use here), but typically generated automatically by 
+build environments (e.g., cmake).  A makefile is processed
+by the <tt>make</tt> Linux/UNIX utility. It makes it very easy to compile
+code by just typing "make" on the command-line, in a way that recompiles
+<i>only what is necessary to be re-compiled</i>.  Google for "make tutorial" to find
+many, many on-line instructions for using make if you're curious.  Below we
+explain how we can use our Makefile for our purposes.  There is no need to
+become a makefile expert for this course.
+</p>
 
-  </script>
+<h3 id="running-your-own-nasm-program">Running your own NASM program</h3>
 
+<p>Here are the steps that you can follow for each NASM program you’ll write in the course:</p>
+<ol>
+<li> Download the <a href="/ics312_spring2021/morea/GettingStarted/nasm_check.tar">nasm_check.tar</a> archive to some working directory</li>
+<li> Extract the archive using the <tt>tar -xvf nasm_check.tar</tt> command</li>
+<li> Rename the directory to something else, for instance using: <tt>mv nasm_check nasm_program</tt></li>
+<li> <tt>cd nasm_program</tt></li>
+<li> Create a file with your program (from scratch, download, etc.) in a file in that directory, e.g., <tt>ics312_first_v1.asm</tt></li>
+<li> Edit the file <tt>Makefile</tt> and replace "<tt>ics312_test</tt>" in the first line by "<tt>ics312_first_v1</tt>" (i.e., the name of your program)</li>
+<li> Typing the <tt>make</tt> command will now assemble, link, and run your program</li>
+<li> If you don't want the makefile to run your program for you, then replace the "<tt>default: $(PROGRAM) run</tt>" in the makefile by "<tt>default: $(PROGRAM)</tt>". To run the program you must now type <tt>make run</tt>. Of course you can always run your program by invoking its name from the
+command-line.</li>
+</ol>
 
+<h3 id="what-about-compiling-multiple-executables">What about compiling multiple executables?</h3>
 
+<p>
+In some assignment you will be asked to write multiple programs. You then
+want to have a single Mafile to compile them all. Below is how to do this
+simply for 2 programs. You can of course repeat this pattern for more
+programs. There are much fancier ways to do this with shorter Makefiles,
+but this is a the most basic approach. You should <a href="./SampleMakefile/Makefile">download the Makefile</a> below (cut-and-pasting Makefiles is fraught with peril due to TAB characters).  You then just need to replace "firstprogram" and "secondprogram" by the actual names of your programs (without the .asm extension).  It should be easy to tweak this Makefile to extend it and make it do what you want. 
+</p>
 
+<figure class="highlight"><pre><code class="language-text" data-lang="text">PROGRAM1=firstprogram
+PROGRAM2=secondprogram
+CC=gcc
+CFLAGS=-m32
+ASM=nasm
+ASMFLAGS=-f elf
 
-</div>
+default: $(PROGRAM1) $(PROGRAM2)
+
+$(PROGRAM1): $(PROGRAM1).o driver.o asm_io.o
+	$(CC) $(CFLAGS) $(PROGRAM1).o driver.o asm_io.o -o $(PROGRAM1)
+
+$(PROGRAM1).o: $(PROGRAM1).asm
+	$(ASM) $(ASMFLAGS) $(PROGRAM1).asm -o $(PROGRAM1).o
+
+$(PROGRAM2): $(PROGRAM2).o driver.o asm_io.o
+	$(CC) $(CFLAGS) $(PROGRAM2).o driver.o asm_io.o -o $(PROGRAM2)
+
+$(PROGRAM2).o: $(PROGRAM2).asm
+	$(ASM) $(ASMFLAGS) $(PROGRAM2).asm -o $(PROGRAM2).o
+
+asm_io.o: asm_io.asm
+	$(ASM) $(ASMFLAGS) -d ELF_TYPE asm_io.asm -o asm_io.o
+
+driver.o: driver.c
+	$(CC) $(CFLAGS) -c driver.c -o driver.o
+
+clean:
+	/bin/rm -f *.o $(PROGRAM1) $(PROGRAM2)</code></pre></figure>
+
 
 </div>
 
@@ -141,7 +215,7 @@
       No footer page content supplied.
       
       <p style="margin: 0">Powered by the <a href="http://morea-framework.github.io/">Morea Framework</a> (Theme: cerulean)<br>
-        Last update on: <span>2021-02-04 16:26:50 -1000</span></p>
+        Last update on: <span>2021-02-04 16:39:04 -1000</span></p>
 
       <p style="margin: 0">
         
