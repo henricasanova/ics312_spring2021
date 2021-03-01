@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title> Homework Assignment #2 | ICS 312 Spring 2021 </title>
+  <title> Bit Operations | ICS 312 Spring 2021 </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8">
 
@@ -70,92 +70,140 @@
 </div>
 
 
+
 <div class="breadcrumb-bar">
   <div class="container">
     <ol class="breadcrumb">
       
       <li><a href="/ics312_spring2021/">Home</a></li>
       <li><a href="/ics312_spring2021/modules">Modules</a></li>
-      <li><a href="/ics312_spring2021/modules/x86nasm">X86 & NASM</a></li>
-      <li class="active">Homework Assignment #2</li>
+      <li class="active">Bit Operations</li>
     </ol>
   </div>
 </div>
 
-
 <div class="container">
-  <h2 id="homework-assignment-2-56-pts">Homework Assignment #2 [56 pts]</h2>
-
-<hr />
-
-<p>You are expected to do your own work on all homework assignments.  You
-may (and are encouraged to) engage in <i>general</i> discussions with
-your classmates regarding the assignments, but specific details of a
-solution, including the solution itself, must always be your
-own work. (See the statement of Academic Dishonesty on the 
-<a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a>.)</p>
-
-<h4 id="how-to-turn-in">How to turn in?</h4>
-
-<p>Assignments need to be turned in via <a href="https://laulima.hawaii.edu/portal">Laulima</a>. Check the <a href="/ics312_spring2021/morea/GettingStarted/reading-syllabus.html">Syllabus</a> for the late assignment policy for the course.</p>
-
-<h4 id="what-to-turn-in">What to turn in?</h4>
-
-<p>You should turn in a single <b>plain text or PDF</b> file named <tt>README.txt</tt> or <tt>README.pdf</tt>
-with your answers to the assignment’s questions.</p>
-
-<hr />
-
-<h3 id="exercise-1-24pts-memory-layout">Exercise #1 [24pts]: Memory Layout</h3>
-
-<p>Consider the following .data segment:</p>
-
-<figure class="highlight"><pre><code class="language-text" data-lang="text">A       db      "c", "af", 27o, 0
-B       dd      1011b
-C       times 2 dw      -27
-D       db      043h, 0AAh
-E       dw  043AAh
-F       dw  -34o, 0</code></pre></figure>
-
-<p><strong>Question #1 [18pts]</strong>
-What are the contents of the 21 memory bytes starting at address <tt>A</tt>, 
-<strong>in hex</strong>, on a machine that uses <strong>Little Endian</strong>?</p>
-
-<p><strong>Question #2 [6pts]:</strong> For each label say if it would lead to different byte orders on a Big Endian machine (answer “yes” if it would, “no” if it wouldn’t).</p>
-
-<hr />
-
-<h3 id="exercise-2-32pts-memory-and-registers">Exercise #2 [32pts]: Memory and Registers</h3>
-
-<p>Consider the following .data segment:</p>
-
-<figure class="highlight"><pre><code class="language-text" data-lang="text">L1       L2       L3       L4       L5
-04 FE 3A AA 50 41 03 FE FF FF FF 12 42 03 F2 F4 </code></pre></figure>
-
-<p>and the following program fragment:</p>
-
-<figure class="highlight"><pre><code class="language-text" data-lang="text">mov	eax, L2
-mov	ebx, L3
-inc     ebx
-mov     ebx, [ebx]
-add     eax, ebx
-mov     ebx, [eax]
-mov     [L4], bx
-mov     ax, [L5]
-mov     cx, [L2] 
-add     ax, cx
-mov     ecx, L1
-add     ecx, 2
-mov     [ecx], ax</code></pre></figure>
-
-<p>After the code finishes executing, what are the contents of the 16 memory
-bytes starting at address L1, on a machine using <strong>Little Endian</strong>?</p>
-
-<p><em>Show your work for each instruction, as done for the examples in the lecture
-notes.</em></p>
-
-
+  <h1><small>Module: </small> Bit Operations </h1>
+  <p>
+</p>
 </div>
+
+
+
+
+
+<div class="section-background-1">
+  <div class="container">
+    <h2>Learning Outcomes</h2>
+
+    
+      
+      <h3>Assembly Programming</h3>
+      <p>
+        
+      </p>
+      <ul>
+  <li>Be able to develop assembly programs using a main classes of instructions and programming idioms.</li>
+</ul>
+
+
+    
+      
+      <h3>Assembly and High-level Languages</h3>
+      <p>
+        
+      </p>
+      <ul>
+  <li>Understand some of the relations between high-level programming languages and assembly language</li>
+</ul>
+
+
+    
+
+  </div>
+</div>
+
+
+
+
+
+<div class="section-background-2">
+  <div class="container">
+  <h2>Readings</h2>
+
+    <div class="row">
+      
+        
+        <div class="col-sm-3">
+          <a href="/ics312_spring2021/morea/BitOperations/ics312_shifts.pdf" class="thumbnail">
+            <h4>Bit Shifts</h4>
+            <p>Using shift instructions in assembly (PCASM Section 2.1)</p>
+
+            <p>
+              
+              <span class="badge">Lecture notes</span>
+              
+              <span class="badge">Textbook reading</span>
+              
+            </p>
+          </a>
+        </div>
+      
+      
+      
+      
+      
+        
+        <div class="col-sm-3">
+          <a href="/ics312_spring2021/morea/BitOperations/ics312_bitmasks.pdf" class="thumbnail">
+            <h4>Bitmasks</h4>
+            <p>Using bitmasks with bit operations (PCASM Sections 3.2, 3.3, 3.4)</p>
+
+            <p>
+              
+              <span class="badge">Lecture notes</span>
+              
+              <span class="badge">Textbook reading</span>
+              
+            </p>
+          </a>
+        </div>
+      
+      
+      
+      
+      
+        
+        <div class="col-sm-3">
+          <a href="/ics312_spring2021/morea/BitOperations/reading-bitoperations-asm.html" class="thumbnail">
+            <h4>Sample source code</h4>
+            
+
+            <p>
+              
+              <span class="badge">asm code</span>
+              
+            </p>
+          </a>
+        </div>
+      
+      
+      
+      
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
 
 
 
